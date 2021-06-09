@@ -10,7 +10,6 @@ import java.util.List;
 @Service
 public class ExpenseListService {
 
-    //commentaire
     @Autowired
     private ExpenseListRepository expenseListRepository;
 
