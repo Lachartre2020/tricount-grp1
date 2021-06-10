@@ -14,6 +14,17 @@ public class ExpenseList {
     @OneToMany(mappedBy = "expenseList", cascade = CascadeType.ALL)
     private List<Expense> expenses;
 
+    @OneToMany(mappedBy = "expenseList")
+    List<Participant> participants;
+
+    public List<Participant> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<Participant> participants) {
+        this.participants = participants;
+    }
+    
     public void setId(Long id) {
         this.id = id;
     }
