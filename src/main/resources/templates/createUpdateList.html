@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Création/Modification d'une liste de dépense</title>
 </head>
 <body>
+<h3 th:text="${expenseList.id} ? 'Liste de dépense : '+${expenseList.name} : 'Créer une liste de dépense'">Wizard</h3>
+<form method="post" th:action="@{/lists/*{id}}" th:object="${expenseList}">
+    <input name="id" th:field="*{id}" type="hidden">
+    <div>
+        <label for="name">Nom de liste :</label>
+        <input type="text" id="name" name="name" required th:field="*{name}">
+    </div>
+    <div class="button">
+        <button type="submit">Modification de la liste</button>
+    </div>
+</form>
+
+
 
 </body>
 </html>
