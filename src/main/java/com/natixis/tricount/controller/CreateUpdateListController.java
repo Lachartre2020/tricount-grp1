@@ -32,14 +32,14 @@ public class CreateUpdateListController
         return "createUpdateList";
     }
 
-    @PostMapping("/lists")
-    public String createUpdateList (@RequestParam Long idList)
-    {
-        if (idList != null)
-        {
-
-        }
-        createUpdateListService.save(idList);
-        return "redirect:/lists";
-    }
+//    @PostMapping("/lists")
+//    public String createUpdateList (@RequestParam Long idList)
+//    {
+//        if (idList != null)
+//        {
+//
+//        }
+//        createUpdateListService.save(idList);
+//        return "redirect:/lists";
+//    }
 }
