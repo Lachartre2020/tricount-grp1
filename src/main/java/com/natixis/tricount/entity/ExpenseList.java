@@ -1,9 +1,7 @@
 package com.natixis.tricount.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class ExpenseList {
@@ -13,6 +11,17 @@ public class ExpenseList {
 
     private String name;
 
+    @OneToMany(mappedBy = "expenseList")
+    List<Participant> participants;
+
+    public List<Participant> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<Participant> participants) {
+        this.participants = participants;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -21,11 +30,11 @@ public class ExpenseList {
         return id;
     }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 }
