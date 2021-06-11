@@ -1,6 +1,7 @@
 package com.natixis.tricount.controller;
 
 import com.natixis.tricount.entity.ExpenseList;
+import com.natixis.tricount.entity.Participant;
 import com.natixis.tricount.service.CreateUpdateListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +29,7 @@ public class CreateUpdateListController
             }
         }
         model.addAttribute("expenseList", expenseList);
+        model.addAttribute("participants", expenseList.getParticipants());
         return "createUpdateList";
     }
 
@@ -35,6 +37,15 @@ public class CreateUpdateListController
     public String createUpdateList(@ModelAttribute ExpenseList expenseList) {
         createUpdateListService.save(expenseList);
         return "redirect:/lists/"+expenseList.getId();
+    }
+    @PostMapping("/lists/{idList}/participant")
+    public String addParticipantInList(@ModelAttribute Participant participant, @PathVariable Long idList)
+    {
+        createUpdateListService.addParticipantList(participant,idList);
+        Optional<ExpenseList> expenseList=createUpdateListService.findById(idList);
+//        expenseList.get().getParticipants().add(participant);
+//        createUpdateListService.save(expenseList.get());
+        return "redirect:/lists/"+expenseList.get().getId();
     }
 
     @GetMapping("/listss")
@@ -44,14 +55,4 @@ public class CreateUpdateListController
         model.addAttribute("expenseList", expenseList);
         return "createUpdateList";
     }
-
-//    @PostMapping("/lists")
-//    public String createList (ExpenseList expenseList)
-//    {
-//        expenseList.getName();
-//
-//        createUpdateListService.save(expenseList);
-//
-//        return "createUpdateList";
-//    }
 }
