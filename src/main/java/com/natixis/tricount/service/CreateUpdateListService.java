@@ -27,12 +27,9 @@ public class CreateUpdateListService {
         return expenseListRepository.findById(idList);
     }
 
-    public void addParticipantList(Participant participant, Long idList)
-    {
-        Optional<ExpenseList> expenseList = expenseListRepository.findById(idList);
-        List<Participant> participantsExpenseList = expenseList.get().getParticipants();
-        participantsExpenseList.add(participant);
-        expenseListRepository.save(expenseList.get());
-        //participantRepository.save(participant);
+    public void addParticipantList(Participant participant, Long idList) {
+        ExpenseList expenseList = expenseListRepository.findById(idList).get();
+        participant.setExpenseList(expenseList);
+        participantRepository.save(participant);
     }
 }

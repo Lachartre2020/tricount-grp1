@@ -48,5 +48,4 @@ public class ExpenseList {
     public void setExpenses(List<Expense> expenses) {
         this.expenses = expenses;
     }
-
 }
