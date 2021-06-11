@@ -24,7 +24,7 @@ public class ExpenseList {
     public void setParticipants(List<Participant> participants) {
         this.participants = participants;
     }
-    
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -48,4 +48,5 @@ public class ExpenseList {
     public void setExpenses(List<Expense> expenses) {
         this.expenses = expenses;
     }
+
 }

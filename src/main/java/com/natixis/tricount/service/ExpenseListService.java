@@ -21,3 +21,9 @@ public class ExpenseListService {
     public Optional<ExpenseList> findById(Long id) { return expenseListRepository.findById(id); }
 
 }
+
+	public void save(ExpenseList expenseList) {
+		expenseListRepository.save(expenseList);		
+	}
+}
+
