@@ -31,6 +31,7 @@ public class CreateUpdateListController
         return "createUpdateList";
     }
 
+
     @PostMapping("/lists/{idList}")
     public String createUpdateList(@ModelAttribute ExpenseList expenseList) {
         createUpdateListService.save(expenseList);
@@ -45,13 +46,4 @@ public class CreateUpdateListController
         return "createUpdateList";
     }
 
-//    @PostMapping("/lists")
-//    public String createList (ExpenseList expenseList)
-//    {
-//        expenseList.getName();
-//
-//        createUpdateListService.save(expenseList);
-//
-//        return "createUpdateList";
-//    }
 }

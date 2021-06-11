@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+	<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>Consultation des Listes des dépenses</title>
+	</head>
+	<body>
+		<!-- Accéder aux listes de dépenses --> 
+		<h3>Expenses Lists:</h3>
+		<!--  <form method="get" action="/lists" th:object="${expenseList}">-->
+			<table>
+			    <thead>
+			    <tr>
+			        <th>Id</th>
+			        <th>Name</th>
+			    </tr>
+			    </thead>
+			    <tbody>
+			    <tr th:each="list : ${expenseList}">
+			        <td th:text="${list.id}">id</td>
+			        <td th:text="${list.name}">name</td>
+			    </tr>
+			    </tbody>
+			</table>
+		<br>
+		
+		<!-- Créer une liste de dépenses -->
+		<h1> Create an expenses list : </h1>
+		<form method="post" th:action="@{/lists}" th:object="${expenseList}">
+		    <div>
+		    	<label for="expenseList-name">Name:</label>
+		   		<input type="text" id="expenseList-name" name="name" placeholder="name of the list">
+		    </div>
+		    <input type="submit" value="Send">
+		</form>
+		
+		
+		<!-- retour à la page principale  -->
+		<a href="/lists">Return to expenses list</a>
+	</body>
+</html>
