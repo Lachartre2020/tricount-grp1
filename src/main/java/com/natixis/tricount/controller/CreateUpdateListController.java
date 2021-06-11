@@ -55,14 +55,4 @@ public class CreateUpdateListController
         model.addAttribute("expenseList", expenseList);
         return "createUpdateList";
     }
-
-//    @PostMapping("/lists")
-//    public String createList (ExpenseList expenseList)
-//    {
-//        expenseList.getName();
-//
-//        createUpdateListService.save(expenseList);
-//
-//        return "createUpdateList";
-//    }
 }

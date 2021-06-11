@@ -11,6 +11,9 @@ public class ExpenseList {
 
     private String name;
 
+    @OneToMany(mappedBy = "expenseList", cascade = CascadeType.ALL)
+    private List<Expense> expenses;
+
     @OneToMany(mappedBy = "expenseList")
     List<Participant> participants;
 
@@ -36,5 +39,13 @@ public class ExpenseList {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Expense> getExpenses() {
+        return expenses;
+    }
+
+    public void setExpenses(List<Expense> expenses) {
+        this.expenses = expenses;
     }
 }

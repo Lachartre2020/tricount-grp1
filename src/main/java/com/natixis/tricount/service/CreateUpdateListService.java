@@ -20,7 +20,6 @@ public class CreateUpdateListService {
     private ParticpantRepository participantRepository;
 
     public void save(ExpenseList expenseList) {
-
         expenseListRepository.save(expenseList);
     }
 
