@@ -1,29 +1,90 @@
 <!DOCTYPE html>
-	<html lang="en" xmlns:th="http://www.thymeleaf.org">
-	<head>
-	    <meta charset="UTF-8">
-	    <title>Consultation des Listes des dépenses</title>
-	</head>
-	<body>
-		<!-- Accéder aux listes de dépenses --> 
-		<h3>Expenses Lists:</h3>
-		<!--  <form method="get" action="/lists" th:object="${expenseList}">-->
-			<table>
-			    <thead>
-			    <tr>
-			        <th>Id</th>
-			        <th>Name</th>
-			    </tr>
-			    </thead>
-			    <tbody>
-			    <tr th:each="list : ${expenseList}">
-			        <td th:text="${list.id}">id</td>
-			        <td th:text="${list.name}">name</td>
-			    </tr>
-			    </tbody>
-			</table>
-		<br>
-		
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+   	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/styles.css">
+    <meta charset="UTF-8">    	
+	   <title>Expenses Lists</title>
+</head>
+<body>
+ 	<header th:replace="fragments/header.html :: top"></header> 	
+	
+	<!-- Debut-- Div à ajouter pour que la page ne passe pas sous le manu --> 
+	<div class="row">""</div>
+	<div class="row">""</div>
+	<div class="row">""</div>
+	<div class="container">
+			<h2>Expenses lists</h2>
+	</div>
+	<!-- Fin-- Div à ajouter pour que la page ne passe pas sous le manu --> 
+	
+	<div class="container">
+		<div class="row">
+       		<div class="col-md-12">
+		        <div class="table-responsive">	
+					<table id="mytable" class="table table-bordred table-striped">
+							<tr>
+								<th>Id</th>
+								<th>Name</th>
+								<th>Details</th>
+								<th>Edit</th>
+							</tr>								
+						<tbody>
+		    				<tr th:each="list : ${expenseList}">
+		        				<td th:text="${list.id}">id</td>
+		        				<td th:text="${list.name}">name</td>
+
+								<td style="width: 10%;">
+									<a href="#" class="table-link">
+										<span class="fa-stack">
+											<i class="fa fa-square fa-stack-2x"></i>
+											<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+										</span>
+									</a>
+								</td>	
+								<td style="width: 10%;">								
+									<a href="#" class="table-link">
+										<span class="fa-stack">
+											<i class="fa fa-square fa-stack-2x"></i>
+											<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+										</span>
+									</a>
+								</td>
+								<!-- <a href="#" class="table-link danger">
+									<span class="fa-stack">
+										<i class="fa fa-square fa-stack-2x"></i>
+										<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+									</span>
+								</a>-->
+		    				</tr>							
+						</tbody> 
+					</table>							 
+				</div>		
+			</div>		
+		</div>
+	</div>
+ 
+ 	<!--Debut -- Gestion de la pagination --> 
+ 	<!-- 
+	 <nav aria-label="Something">
+   		<ul class="pagination justify-content-center bg-light">
+      		<li class="page-item disabled">
+         		<a class="page-link" href="#" tabindex="-1">Previous</a>
+      		</li>
+      		<li class="page-item"><a class="page-link" href="#">1</a></li>
+      		<li class="page-item"><a class="page-link" href="#">2</a></li>
+      		<li class="page-item"><a class="page-link" href="#">3</a></li>
+      		<li class="page-item">
+         		<a class="page-link" href="#">Next</a>
+      		</li>
+   		</ul>
+	 </nav>
+	 <!--Fin -- Gestion de la pagination --> 
+	
+
 		<!-- Créer une liste de dépenses -->
 		<h1> Create an expenses list : </h1>
 		<form method="post" th:action="@{/lists}" th:object="${expenseList}">
@@ -37,5 +98,6 @@
 		
 		<!-- retour à la page principale  -->
 		<a href="/lists">Return to expenses list</a>
+		<footer th:replace="fragments/footer.html :: bottom"></footer>
 	</body>
 </html>

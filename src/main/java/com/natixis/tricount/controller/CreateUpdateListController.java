@@ -4,7 +4,6 @@ import com.natixis.tricount.entity.ExpenseList;
 import com.natixis.tricount.entity.Participant;
 import com.natixis.tricount.service.CreateUpdateListService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
