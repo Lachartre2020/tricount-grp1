@@ -38,7 +38,7 @@
 		        				<td th:text="${list.name}">name</td>
 
 								<td style="width: 10%;">
-									<a href="#" class="table-link">
+									<a class="table-link" th:href="|@{/lists/}${list.id}@{/expenses}|">
 										<span class="fa-stack">
 											<i class="fa fa-square fa-stack-2x"></i>
 											<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
