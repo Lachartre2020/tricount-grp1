@@ -16,9 +16,22 @@ public class ExpensesOfListSrevice {
 
     @Autowired
     private ExpenseRepository expenseRepository;
+    
+    @Autowired
+    private ExpenseListRepository expenseListRepository;
 
     public Optional<Expense> findById(Long id) { return expenseRepository.findById(id); }
 
+	public void addExpenseOfList(Long idList, Expense expense) {
+	 	ExpenseList expenseList = new ExpenseList();
+    	if(idList != null ) {
+    		Optional<ExpenseList> optionalExpenseList = expenseListRepository.findById(idList);
+    		if (optionalExpenseList.isPresent()) 
+    		{
+    			expenseList = optionalExpenseList.get();
+    			expense.setExpenseList(expenseList);
+    	    	expenseRepository.save(expense);
+    		}
+    	}
+	}
 }
-
-
