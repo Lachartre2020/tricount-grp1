@@ -7,6 +7,10 @@
     <title>Création/Modification d'une liste de dépense</title>
 </head>
 <body>
+<header th:replace="fragments/header.html :: top"></header>
+<div class="row">""</div>
+<div class="row">""</div>
+<div class="row">""</div>
 <h3 th:text="${expenseList.id} ? 'Liste de dépense : '+${expenseList.name} : 'Créer une liste de dépense'">Wizard</h3>
 
 <form method="post" th:action="@{/lists/*{id}}" th:object="${expenseList}">
@@ -72,6 +76,6 @@
     </tr>
     </tbody>
 </table>
-
+<footer th:replace="fragments/footer.html :: bottom"></footer>
 </body>
 </html>
