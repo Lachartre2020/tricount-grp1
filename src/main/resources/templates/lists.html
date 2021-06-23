@@ -19,8 +19,37 @@
 	<div class="container">
 			<h2>Expenses lists</h2>
 	</div>
-	<!-- Fin-- Div à ajouter pour que la page ne passe pas sous le menu --> 
-	
+	<!-- Fin-- Div à ajouter pour que la page ne passe pas sous le menu -->
+
+	<div class="container">
+	<!-- Button trigger modal -->
+	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+		Ajouter une liste de dépense
+	</button>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ajouter une liste de dépense</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form method="post" th:action="@{/lists}" th:object="${expenseList}">
+						<div class="mb-3">
+							<label for="expenseList-name">Nom:</label>
+							<input type="text" id="expenseList-name" name="name" placeholder="Exemple:Colocation" required="required">
+						</div>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Ajouter</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+
 	<div class="container">
 		<div class="row">
        		<div class="col-md-12">
@@ -46,7 +75,9 @@
 									</a>
 								</td>	
 								<td style="width: 10%;">								
-									<a href="#" class="table-link">
+<!--									<a href="#" class="table-link">-->
+
+										<a th:href="'/lists/'+${list.id}" class="table-link">
 										<span class="fa-stack">
 											<i class="fa fa-square fa-stack-2x"></i>
 											<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
@@ -86,18 +117,14 @@
 	
 
 		<!-- Créer une liste de dépenses -->
-		<h1> Create an expenses list : </h1>
-		<form method="post" th:action="@{/lists}" th:object="${expenseList}">
-		    <div>
-		    	<label for="expenseList-name">Name:</label>
-		   		<input type="text" id="expenseList-name" name="name" placeholder="name of the list">
-		    </div>
-		    <input type="submit" value="Send">
-		</form>
-		
-		
-		<!-- retour à la page principale  -->
-		<a href="/lists">Return to expenses list</a>
+<!--		<h1> Create an expenses list : </h1>-->
+<!--		<form method="post" th:action="@{/lists}" th:object="${expenseList}">-->
+<!--		    <div>-->
+<!--		    	<label for="expenseList-name">Name:</label>-->
+<!--		   		<input type="text" id="expenseList-name" name="name" placeholder="name of the list">-->
+<!--		    </div>-->
+<!--		    <input type="submit" value="Send">-->
+<!--		</form>-->
 		<footer th:replace="fragments/footer.html :: bottom"></footer>
 	</body>
 </html>

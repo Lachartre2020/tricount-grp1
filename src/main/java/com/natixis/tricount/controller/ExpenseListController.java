@@ -25,6 +25,6 @@ public class ExpenseListController {
 	@PostMapping("/lists")
 	public String saveExpensesList(@ModelAttribute ExpenseList expenseList) {
 		service.save(expenseList);
-		return "lists";
+		return "redirect:/lists";
 	}
 }

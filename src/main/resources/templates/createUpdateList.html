@@ -11,7 +11,7 @@
 <div class="row">""</div>
 <div class="row">""</div>
 <div class="row">""</div>
-<h3 th:text="${expenseList.id} ? 'Liste de dépense : '+${expenseList.name} : 'Créer une liste de dépense'">Wizard</h3>
+<h3 th:text="${expenseList.id} ? 'Liste de dépense : '+${expenseList.name} : 'Créer une liste de dépense'">Liste de dépense</h3>
 
 <form method="post" th:action="@{/lists/*{id}}" th:object="${expenseList}">
     <input name="id" th:field="*{id}" type="hidden">
