@@ -1,32 +1,64 @@
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
     <meta charset="UTF-8">
     <title>Détail d'une liste de dépense</title>
 </head>
 <body>
+<header th:replace="fragments/header.html :: top"></header>
+<div class="row">""</div>
+<div class="row">""</div>
+<div class="row">""</div>
+<div class="container">
 <h1 th:text="|Liste de dépense - ${expenseList.name} |">Liste de dépense</h1>
-<h1>Nombre de participants : ???? </h1>
-<table>
-    <thead>
-    <tr>
-        <th>Nom de la dépense</th>
-        <th>Nb de participant</th>
-        <th>Montant</th>
-        <th>Détail</th>
-        <th>Supprimer</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="expense : ${expensesOfList}">
-        <td th:text="${expense.name}">name</td>
-        <td th:text="${expense.id}">id</td>
-        <td th:text="${expense.amount}">amount</td>
-        <td><a th:href="|@{/expenses/}${expense.id}|">Détail</a></td>
-        <td><a th:href="|@{/expenses/delete/}${expense.id}|">Supprimer</a></td>
-    </tr>
-    </tbody>
-</table>
+<h2 th:text="|Nombre de participants : ${expenseList.participants.size()} |">Nombre de participants</h2>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+            <table class="table table-bordred table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Nom de la dépense</th>
+                    <th scope="col">Nb de participant</th>
+                    <th scope="col">Montant</th>
+                    <th scope="col" class="text-center">Détail</th>
+                    <th scope="col" class="text-center">Supprimer</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="expense : ${expensesOfList}">
+                    <td th:text="${expense.name}">name</td>
+                    <td th:text="${expense.id}">id</td>
+                    <td th:text="${expense.amount}">amount</td>
+                    <td style="width: 10%;" class="text-center">
+                        <a class="table-link" th:href="|@{/expenses/}${expense.id}|">
+                            <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </td>
+                    <td style="width: 10%;" class="text-center">
+                        <a class="table-link" th:href="|@{/expenses/delete/}${expense.id}|">
+                            <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments/footer.html :: bottom"></footer>
 </body>
 </html>
