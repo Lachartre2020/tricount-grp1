@@ -14,9 +14,45 @@
 <div class="row">""</div>
 <div class="row">""</div>
 <div class="container">
-<h1 th:text="|Liste de dépense - ${expenseList.name} |">Liste de dépense</h1>
-<h2 th:text="|Nombre de participants : ${expenseList.participants.size()} |">Nombre de participants</h2>
+
+	<h1 th:text="|Liste de dépense - ${expenseList.name} |">Liste de dépense</h1>
+	<div class="row">
+		<h2 class="col-md-8" th:text="|Nombre de participants : ${expenseList.participants.size()} |">Nombre de participants</h2>
+	   <div class="col-md-4"> 
+	   		<!-- Button trigger modal -->
+			<button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+	 		 	Ajouter une dépense
+			</button>
+	
+			<!-- Modal -->
+			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			    
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">Ajout d'une dépense à la liste</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+	
+			      <div class="modal-body">
+			        <form  method="post" th:action="@{'/lists/' + ${expenseList.id} + '/expense'}" th:object="${expense}">
+				       <div class="mb-3">
+				        <label for="name" class="col-form-label">Nom de la dépense:</label>
+				        <input type="text" id="name" name="name" class="form-control" required>
+				        <label for="amount" class="col-form-label">Montant de la dépense: </label>
+				        <input type="text" id="amount" name="amount" class="form-control" required>
+				      </div>
+				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				        <button type="submit" class="btn btn-primary">Add</button>
+			      	</form>
+			      </div>
+			    
+			   </div>
+		  	  </div>
+			</div>
+		</div>
 </div>
+
 <div class="container">
     <div class="row">
         <div class="col-md-12">
