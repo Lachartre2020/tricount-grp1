@@ -32,4 +32,10 @@ public class CreateUpdateListService {
         participant.setExpenseList(expenseList);
         participantRepository.save(participant);
     }
+
+    public void removeParticipantList(Long idParticipant)
+    {
+        participantRepository.deleteById(idParticipant);
+    }
+    
 }

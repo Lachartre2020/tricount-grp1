@@ -55,4 +55,13 @@ public class CreateUpdateListController
         model.addAttribute("expenseList", expenseList);
         return "createUpdateList";
     }
+
+    @PostMapping("/participant/delete/{idParticipant}/{idExpenseList}")
+    public String removeParticipantInList(@PathVariable Long idParticipant,@PathVariable Long idExpenseList)
+    {
+        createUpdateListService.removeParticipantList(idParticipant);
+//        expenseList.get().getParticipants().add(participant);
+//        createUpdateListService.save(expenseList.get());
+        return "redirect:/lists/"+idExpenseList;
+    }
 }

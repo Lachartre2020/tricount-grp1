@@ -3,16 +3,22 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
     <meta charset="UTF-8">
-    <title>Création/Modification d'une liste de dépense</title>
+    <title>Détail d'une liste de dépense</title>
 </head>
 <body>
 <header th:replace="fragments/header.html :: top"></header>
 <div class="row">""</div>
 <div class="row">""</div>
 <div class="row">""</div>
-<h3 th:text="${expenseList.id} ? 'Liste de dépense : '+${expenseList.name} : 'Créer une liste de dépense'">Liste de dépense</h3>
 
+<div class="container">
+    <h2 th:text="${expenseList.id} ? 'Liste de dépense : '+${expenseList.name} : 'Créer une liste de dépense'">Liste de dépense</h2>
+</div>
+
+<div class="container">
 <form method="post" th:action="@{/lists/*{id}}" th:object="${expenseList}">
     <input name="id" th:field="*{id}" type="hidden">
     <div class="mb-3">
@@ -23,15 +29,18 @@
         <button type="submit" class="btn btn-primary">Modification de la liste</button>
 <!--    </div>-->
 </form>
+</div>
 
 <br>
-<br>
 
+<div class="container">
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Ajouter un Participant
 </button>
+</div>
 
+<div class="container">
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -44,11 +53,11 @@
                 <form  method="post" th:action="@{'/lists/' + ${expenseList.id} + '/participant'}" th:object="${participants}">
                     <div class="mb-3">
                         <label for="name" class="col-form-label">Nom :</label>
-                        <input type="text" class="form-control" id="namePart" name="name">
+                        <input type="text" class="form-control" id="namePart" name="name" required="required">
                         <label for="name" class="col-form-label">Prénom :</label>
-                        <input type="text" class="form-control" id="firtnamePart" name="firstName">
+                        <input type="text" class="form-control" id="firtnamePart" name="firstName" required="required">
                     </div>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                     <button type="submit" class="btn btn-primary">Ajouter</button>
                 </form>
             </div>
@@ -59,23 +68,53 @@
         </div>
     </div>
 </div>
+</div>
 
+<div class="container">
 <table class="table table-hover">
     <thead>
     <tr th:each="expenseList : ${expenseList}">
         <th scope="col">Nom</th>
         <th scope="col">Prénom</th>
-        <th scope="col">X</th>
+        <th scope="col">Supprimer</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="expenseListParticipants : ${expenseList.getParticipants()}">
         <td  th:text="${expenseListParticipants.name}">Name</td>
         <td  th:text="${expenseListParticipants.firstName}">Name</td>
-        <td  th:text="${expenseList.id}">X</td>
+        <td style="width: 10%;">
+            <!-- Button trigger modal -->
+                <button type="button" class="btn btn-light" data-bs-toggle="modal" th:data-bs-target="'#deleteParticipantModal' + ${expenseListParticipants.id}">
+                    <span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                    </span>
+                </button>
+            <div class="container">
+                <!-- Modal -->
+                <div class="modal fade" th:id="'deleteParticipantModal' + ${expenseListParticipants.id}" tabindex="-1" aria-labelledby="deleteParticipantModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteParticipantModalLabel" th:text="'Confirmation de la suppression du participant : ' + ${expenseListParticipants.firstName} +' '+ ${expenseListParticipants.name} "></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form  method="post" th:action="|@{/participant/delete/}${expenseListParticipants.id}@{/}${expenseListParticipants.expenselist.getId()}|" th:object="${participants}">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                    <button type="submit" class="btn btn-danger">Oui</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
     </tr>
     </tbody>
 </table>
+</div>
 <footer th:replace="fragments/footer.html :: bottom"></footer>
 </body>
 </html>
