@@ -28,7 +28,7 @@
             </div>
             <div class="col-sm-9">
                 <!--    <div class="button">-->
-                <button type="submit" class="btn btn-primary">Modifier le nom de la liste</button>
+                <button type="submit" class="btn btn-primary">Sauvegarder le nom de la liste</button>
             </div>
         </div>
     </form>
@@ -39,7 +39,7 @@
 <div class="container">
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Ajouter un Participant
+        Ajouter un participant
     </button>
 </div>
 
@@ -89,7 +89,7 @@
             <td style="width: 10%;">
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-light" data-bs-toggle="modal" th:data-bs-target="'#deleteParticipantModal' + ${expenseListParticipants.id}">
-                    <span class="fa-stack">
+                    <span class="fa-stack" style="color:red">
                         <i class="fa fa-square fa-stack-2x"></i>
                         <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
                     </span>
