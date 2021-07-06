@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="/css/styles.css">
     <meta charset="UTF-8">    	
-	   <title>Expenses Lists</title>
+	   <title>Tricount.com | Liste des dépenses</title>
 </head>
 <body>
  	<header th:replace="fragments/header.html :: top"></header> 	
@@ -17,16 +17,15 @@
 	<div class="row">""</div>
 	<div class="row">""</div>
 	<div class="container">
-			<h2>Expenses lists</h2>
+		<div class="row align-items-center">
+			<h1 class="col-md-4" >Liste des dépenses</h1>
+			<div class="col-md-8">
+			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+				Ajouter une liste de dépense
+			</button>
+			</div>
+		</div>
 	</div>
-	<!-- Fin-- Div à ajouter pour que la page ne passe pas sous le menu -->
-
-	<div class="container">
-	<!-- Button trigger modal -->
-	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-		Ajouter une liste de dépense
-	</button>
-
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -49,6 +48,8 @@
 		</div>
 	</div>
 	</div>
+
+	<br>
 
 	<div class="container">
 		<div class="row">
@@ -113,7 +114,7 @@
       		</li>
    		</ul>
 	 </nav>
-	 <!--Fin -- Gestion de la pagination --> 
+	 <!-- Fin -- Gestion de la pagination -->
 	
 
 		<!-- Créer une liste de dépenses -->
