@@ -23,9 +23,12 @@ public class Participant {
 			joinColumns = @JoinColumn(name = "participant_id"),
 			inverseJoinColumns = @JoinColumn(name = "expense_id"))
 	private List<Expense> expenses = new ArrayList<>();
+
+	@Transient
+	private Float balance;
 	
 	public Participant() {
-		
+		this.balance = 0F;
 	}
 	
 	public Long getId() {
@@ -67,5 +70,12 @@ public class Participant {
 	public void setExpense(List<Expense> expenses) {
 		this.expenses = expenses;
 	}
-	
+
+	public Float getBalance() {
+		return balance;
+	}
+
+	public void setBalance(Float balance) {
+		this.balance = balance;
+	}
 }

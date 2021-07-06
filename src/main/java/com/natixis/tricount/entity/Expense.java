@@ -20,7 +20,7 @@ public class Expense {
 	
 	@ManyToOne
 	@JoinColumn(name = "participant_id")
-	private Participant participant;
+	private Participant participantPayer;
 
 	@ManyToMany(mappedBy = "expenses")
 	private List<Participant> participants = new ArrayList<>();
@@ -61,12 +61,12 @@ public class Expense {
 		this.expenseList = expenseList;
 	}
 
-	public Participant getParticipant() {
-		return this.participant;
+	public Participant getParticipantPayer() {
+		return this.participantPayer;
 	}
 	
-	public void setParticipant(Participant participant) {
-		this.participant = participant;
+	public void setParticipantPayer(Participant participant) {
+		this.participantPayer = participant;
 	}
 
 	public List<Participant> getParticipants() {

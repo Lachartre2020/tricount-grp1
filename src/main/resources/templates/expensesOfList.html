@@ -17,8 +17,8 @@
 
 	<h1 th:text="|Liste de dépense - ${expenseList.name} |">Liste de dépense</h1>
 	<div class="row">
-		<h2 class="col-md-8" th:text="|Nombre de participants : ${expenseList.participants.size()} |">Nombre de participants</h2>
-	   <div class="col-md-4"> 
+        <h2 class="col-md-8" th:text="|Nombre de participants : ${expenseList.participants.size()} |">Nombre de participants</h2>
+	    <div class="col-md-2">
 	   		<!-- Button trigger modal -->
 			<button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
 	 		 	Ajouter une dépense
@@ -51,6 +51,9 @@
 		  	  </div>
 			</div>
 		</div>
+        <div class="col-md-2">
+            <a class="btn btn-primary" th:href="|@{/lists/}${expenseList.id}@{/balancing}|" role="button">Afficher l'équilibrage</a>
+        </div>
 </div>
 
 <br>
