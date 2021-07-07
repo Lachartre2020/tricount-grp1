@@ -48,9 +48,9 @@ public class BalancingService {
 
         for (Expense expense: expenses) {
             amountExpense = expense.getAmount();
-            amountByPerson = expense.getAmount()/(expense.getParticipants().size()+1);
+            amountByPerson = expense.getAmount()/(expense.getParticipants().size());
             Participant participant = participantRepository.getById(expense.getParticipantPayer().getId());
-            participant.setBalance(participant.getBalance() + (amountExpense - amountByPerson));
+            participant.setBalance(participant.getBalance() + amountExpense);
             participantRepository.save(participant);
             for (Participant beneficiaire : expense.getParticipants() ) {
                 participant = participantRepository.getById(beneficiaire.getId());
@@ -64,17 +64,14 @@ public class BalancingService {
 
     public List<AmountDistribution> getAmountDistributionList(List<Balancing> balancingList) {
         List<AmountDistribution> amountDistributionList = new ArrayList<>();
-        List<Balancing> positiveBalancingList = new ArrayList<>();
-        List<Balancing> negativeBalancingList = new ArrayList<>();
+        List<Balancing> ascendingBalancingList = new ArrayList<>();
+        List<Balancing> descendingBalancingList = new ArrayList<>();
         for (Balancing balancing : balancingList) {
-            if (balancing.getAccountBalance() > 0) {
-                positiveBalancingList.add(balancing);
-            }
-            if (balancing.getAccountBalance() < 0) {
-                negativeBalancingList.add(balancing);
-            }
+            ascendingBalancingList.add(new Balancing(balancing.getIdParticipant(),balancing.getFirstName(),balancing.getLastName(),balancing.getAccountBalance()));
+            descendingBalancingList.add(new Balancing(balancing.getIdParticipant(),balancing.getFirstName(),balancing.getLastName(),balancing.getAccountBalance()));
         }
-        Collections.sort(positiveBalancingList);
+
+        Collections.sort(descendingBalancingList);
 
         Comparator<Balancing> comparator = new Comparator<Balancing>() {
             @Override
@@ -83,22 +80,22 @@ public class BalancingService {
             }
         };
 
-        Collections.sort(negativeBalancingList, comparator);
+        Collections.sort(ascendingBalancingList, comparator);
 
-        for (Balancing balancing : positiveBalancingList) {
+        for (Balancing balancing : descendingBalancingList) {
             float refund = balancing.getAccountBalance();
-            while (refund > 0 && negativeBalancingList.size() > 0 ) {
-                Balancing negativeBalancing = negativeBalancingList.get(0);
-                refund = refund + negativeBalancing.getAccountBalance();
+            while (refund > 0 && ascendingBalancingList.size() > 0 ) {
+                Balancing ascendingBalancing = ascendingBalancingList.get(0);
+                refund = refund + ascendingBalancing.getAccountBalance();
                 amountDistributionList.add(new AmountDistribution(
-                                                    negativeBalancing.getIdParticipant(),negativeBalancing.getFirstName(),negativeBalancing.getLastName(),
-                                                    Math.abs(Math.abs(refund) - Math.abs(negativeBalancing.getAccountBalance())),
-                                                    balancing.getIdParticipant(),balancing.getFirstName(),balancing.getLastName()));
+                        ascendingBalancing.getIdParticipant(),ascendingBalancing.getFirstName(),ascendingBalancing.getLastName(),
+                        Math.abs(Math.abs(refund) - Math.abs(ascendingBalancing.getAccountBalance())),
+                        balancing.getIdParticipant(),balancing.getFirstName(),balancing.getLastName()));
                 if (refund >= 0) {
-                    negativeBalancingList.remove(0);
+                    ascendingBalancingList.remove(0);
                 } else {
-                    negativeBalancing.setAccountBalance(Math.abs(refund) * -1);
-                    negativeBalancingList.set(0,negativeBalancing);
+                    ascendingBalancing.setAccountBalance(Math.abs(refund) * -1);
+                    descendingBalancingList.set(0,ascendingBalancing);
                 }
 
             }
