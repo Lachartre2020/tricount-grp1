@@ -46,7 +46,6 @@ public class VisuUpdateExpenseController {
         }
         List<Participant> participantList =visuUpdateExpenseService.participantList(visuUpdateExpenseService.idExpenseList(idExpense));
         model.addAttribute("participants",participantList); 
-        System.out.println("**********" + idExpense + "******************");
         return "visuUpdateExpense";
     }
 
@@ -54,7 +53,7 @@ public class VisuUpdateExpenseController {
     @PostMapping("/expenses/{idExpense}/save")
     public String UpdateExpense(@ModelAttribute Expense expenseRet ,Long idPayeur,  @PathVariable Long idExpense)
     {											
-    	System.out.println("**********" + idPayeur + "******************");
+
         if (idExpense != null)
         {
             Participant participant = new Participant();
