@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <meta charset="UTF-8">
+    <title>Détail d'une liste de dépense</title>
+</head>
+<body>
+<header th:replace="fragments/header.html :: top"></header>
+<div class="row">""</div>
+<div class="row">""</div>
+<div class="row">""</div>
+<div class="container">
+
+	<h1 th:text="|Liste de dépense - ${expenseList.name} |">Liste de dépense</h1>
+	<div class="row">
+        <h2 class="col-md-8" th:text="|Nombre de participants : ${expenseList.participants.size()} |">Nombre de participants</h2>
+	    <div class="col-md-2">
+	   		<!-- Button trigger modal -->
+			<button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+	 		 	Ajouter une dépense
+			</button>
+	
+			<!-- Modal -->
+			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			    
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">Ajout d'une dépense à la liste</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+	
+			      <div class="modal-body">
+			        <form  method="post" th:action="@{'/lists/' + ${expenseList.id} + '/expense'}" th:object="${expense}">
+				       <div class="mb-3">
+				        <label for="name" class="col-form-label">Nom de la dépense:</label>
+				        <input type="text" id="name" name="name" class="form-control" required>
+				        <label for="amount" class="col-form-label">Montant de la dépense: </label>
+				        <input type="text" id="amount" name="amount" class="form-control" required>
+				      </div>
+				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				        <button type="submit" class="btn btn-primary">Add</button>
+			      	</form>
+			      </div>
+			    
+			   </div>
+		  	  </div>
+			</div>
+		</div>
+        <div class="col-md-2">
+            <a class="btn btn-primary" th:href="|@{/lists/}${expenseList.id}@{/balancing}|" role="button">Afficher l'équilibrage</a>
+        </div>
+</div>
+
+<br>
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+            <table class="table table-bordred table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Nom de la dépense</th>
+                    <th scope="col">Nb de participant</th>
+                    <th scope="col">Montant</th>
+                    <th scope="col" class="text-center">Détail</th>
+                    <th scope="col" class="text-center">Supprimer</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="expense : ${expensesOfList}">
+                    <td th:text="${expense.name}">name</td>
+                    <td th:text="${expense.id}">id</td>
+                    <td th:text="${expense.amount}">amount</td>
+                    <td style="width: 10%;" class="text-center">
+                        <a class="table-link" th:href="|@{/expenses/}${expense.id}|">
+                            <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </td>
+                    <td style="width: 10%;" class="text-center">
+                        <a class="table-link" th:href="|@{/expenses/delete/}${expense.id}|">
+                            <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments/footer.html :: bottom"></footer>
+</body>
+</html>
