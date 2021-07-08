@@ -17,6 +17,32 @@
 
     <h1 th:text="|Equilibrage de la liste de dépense - ${expenseList.name} |">Equilibrage d'une liste de dépense</h1>
     <div class="row">
+
+        <!-- Bouton -->
+        <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#startBalancingModal">
+            Lancer l'équilibrage
+        </button>
+        <div class="container">
+            <!-- Modal -->
+            <div class="modal fade" id="startBalancingModal" tabindex="-1" aria-labelledby="startBalancingModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="startBalancingModalLabel" th:text="'Voulez vous lancer l\'équilibrage de la liste ' + ${expenseList.name} + ' ?'"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form  method="post" th:action="|@{/lists/balancing/}${expenseList.id}|" th:object="${whoOwesWhomList}">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <button type="submit" class="btn btn-danger">Oui</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin Bouton -->
+
     <div class="container">
         <div class="row">&nbsp;</div>
         <h2>Solde des participants</h2>
@@ -52,7 +78,7 @@
                     <table class="table table-bordred table-striped">
                         <tbody>
                         <tr th:each="amountDistribution : ${whoOwesWhomList}">
-                            <td th:text="|${amountDistribution.firstNamePayer} ${amountDistribution.lastNamePayer} doit ${amountDistribution.amountDistribution} € à ${amountDistribution.firstNameCollector} ${amountDistribution.lastNameCollector} |">who owes whom</td>
+                            <td th:text="|${amountDistribution.firstNamePayer} ${amountDistribution.lastNamePayer} doit ${amountDistribution.amountDistribution} euros à ${amountDistribution.firstNameCollector} ${amountDistribution.lastNameCollector} |">who owes whom</td>
 
                         </tr>
                         </tbody>
