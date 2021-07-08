@@ -34,4 +34,10 @@ public class ExpensesOfListSrevice {
     		}
     	}
 	}
+	
+	public void deleteExpenseList(Long idExpense) {
+		if (idExpense !=null) {
+			expenseRepository.deleteById(idExpense);
+		}
+	}
 }
