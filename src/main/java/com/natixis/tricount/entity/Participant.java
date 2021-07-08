@@ -18,7 +18,7 @@ public class Participant {
 	@JoinColumn(name = "expense_List_id")
 	private ExpenseList expenseList;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "beneficiaire",
 			joinColumns = @JoinColumn(name = "participant_id"),
 			inverseJoinColumns = @JoinColumn(name = "expense_id"))

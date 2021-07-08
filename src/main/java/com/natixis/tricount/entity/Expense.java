@@ -72,9 +72,14 @@ public class Expense {
 	public List<Participant> getParticipants() {
 		return this.participants;
 	}
-	
+
 	public void setParticipants(List<Participant> participants) {
 		this.participants = participants;
-	}	
-	
+	}
+
+	public void addOneParticipantBeneficiary(Participant participant) {
+		this.participants.add(participant);
+		participant.getExpense().add(this);
+	}
+
 }

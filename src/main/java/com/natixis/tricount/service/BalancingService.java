@@ -22,6 +22,9 @@ public class BalancingService {
     @Autowired
     private ParticpantRepository participantRepository;
 
+    @Autowired
+    private ExpenseRepository expenseRepository;
+
     public List<Balancing> getBalacingPage(Long idList) {
         List<Expense> expenses = new ArrayList<>();
         List<Balancing> balancings = new ArrayList<>();
@@ -104,4 +107,21 @@ public class BalancingService {
         return amountDistributionList;
     }
 
+    public void startBalancing(List<AmountDistribution> amountDistributionList, Long idList) {
+
+        for (AmountDistribution amountDistribution:amountDistributionList) {
+
+            Expense expense = new Expense();
+            expense.setName("VIREMENT EQUILIBRAGE");
+            expense.setAmount(amountDistribution.getAmountDistribution());
+            ExpenseList expenseList = expenseListRepository.findById(idList).get();
+            expense.setExpenseList(expenseList);
+            expense.setParticipantPayer(participantRepository.findById(amountDistribution.getIdPayer()).get());
+            expense.addOneParticipantBeneficiary(participantRepository.findById(amountDistribution.getIdCollector()).get());
+            expenseRepository.save(expense);
+
+            amountDistribution.getIdCollector();
+        }
+
+    }
 }
