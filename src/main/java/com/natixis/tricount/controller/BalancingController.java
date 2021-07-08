@@ -2,7 +2,7 @@ package com.natixis.tricount.controller;
 
 import com.natixis.tricount.dto.AmountDistribution;
 import com.natixis.tricount.dto.Balancing;
-import com.natixis.tricount.dto.ListAmountDistributionDto;
+// import com.natixis.tricount.dto.ListAmountDistributionDto;
 import com.natixis.tricount.entity.ExpenseList;
 import com.natixis.tricount.service.BalancingService;
 import com.natixis.tricount.service.ExpenseListService;
@@ -31,16 +31,12 @@ public class BalancingController {
     public String getBalancingPage(Model model, @PathVariable Long idList) {
 
         if (idList != null) {
-
             Optional<ExpenseList> optionalExpenseList = expenseListService.findById(idList);
-            ExpenseList expenseList = new ExpenseList();
-            List<Balancing> balancingList = new ArrayList<>();
-            List<AmountDistribution> amountDistributionList = new ArrayList<>();
 
             if (optionalExpenseList.isPresent()) {
-                expenseList = optionalExpenseList.get();
-                balancingList = balancingService.getBalacingPage(idList);
-                amountDistributionList = balancingService.getAmountDistributionList(balancingList);
+                ExpenseList expenseList = optionalExpenseList.get();
+                List<Balancing> balancingList = balancingService.getBalacingPage(idList);
+                List<AmountDistribution> amountDistributionList = balancingService.getAmountDistributionList(balancingList);
                 model.addAttribute("expenseList",expenseList);
                 model.addAttribute("balancingList", balancingList);
                 model.addAttribute("whoOwesWhomList", amountDistributionList);

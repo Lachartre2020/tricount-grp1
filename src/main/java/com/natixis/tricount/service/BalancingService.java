@@ -6,7 +6,6 @@ import com.natixis.tricount.entity.Expense;
 import com.natixis.tricount.entity.ExpenseList;
 import com.natixis.tricount.entity.Participant;
 import com.natixis.tricount.repository.ExpenseListRepository;
-import com.natixis.tricount.repository.ExpenseRepository;
 import com.natixis.tricount.repository.ParticpantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,14 +51,16 @@ public class BalancingService {
         for (Expense expense: expenses) {
             amountExpense = expense.getAmount();
             amountByPerson = expense.getAmount()/(expense.getParticipants().size());
-            Participant participant = participantRepository.getById(expense.getParticipantPayer().getId());
-            participant.setBalance(participant.getBalance() + amountExpense);
-            participantRepository.save(participant);
-            for (Participant beneficiaire : expense.getParticipants() ) {
-                participant = participantRepository.getById(beneficiaire.getId());
-                participant.setBalance(participant.getBalance() - amountByPerson);
-                participantRepository.save(participant);
+            if (expense.getParticipantPayer() != null) {
+                Participant participant = participantRepository.getById(expense.getParticipantPayer().getId());
+                participant.setBalance(participant.getBalance() + amountExpense);
+                for (Participant beneficiaire : expense.getParticipants() ) {
+                    participant = participantRepository.getById(beneficiaire.getId());
+                    participant.setBalance(participant.getBalance() - amountByPerson);
+                }
+
             }
+
 
         }
 
@@ -90,10 +91,14 @@ public class BalancingService {
             while (refund > 0 && ascendingBalancingList.size() > 0 ) {
                 Balancing ascendingBalancing = ascendingBalancingList.get(0);
                 refund = refund + ascendingBalancing.getAccountBalance();
-                amountDistributionList.add(new AmountDistribution(
-                        ascendingBalancing.getIdParticipant(),ascendingBalancing.getFirstName(),ascendingBalancing.getLastName(),
-                        Math.abs(Math.abs(refund) - Math.abs(ascendingBalancing.getAccountBalance())),
-                        balancing.getIdParticipant(),balancing.getFirstName(),balancing.getLastName()));
+                if (ascendingBalancing.getIdParticipant() != balancing.getIdParticipant()) {
+                    // un participant ne pas etre se payer lui meme
+                    amountDistributionList.add(new AmountDistribution(
+                            ascendingBalancing.getIdParticipant(),ascendingBalancing.getFirstName(),ascendingBalancing.getLastName(),
+                            Math.abs(Math.abs(refund) - Math.abs(ascendingBalancing.getAccountBalance())),
+                            balancing.getIdParticipant(),balancing.getFirstName(),balancing.getLastName()));
+                }
+
                 if (refund >= 0) {
                     ascendingBalancingList.remove(0);
                 } else {
