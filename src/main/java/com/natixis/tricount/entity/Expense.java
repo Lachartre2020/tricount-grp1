@@ -1,7 +1,9 @@
 package com.natixis.tricount.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -23,7 +25,7 @@ public class Expense {
 	private Participant participantPayer;
 
 	@ManyToMany(mappedBy = "expenses")
-	private List<Participant> participants = new ArrayList<>();
+	private Set<Participant> participants = new HashSet<>();
 	
 	public Expense() {
 		
@@ -69,11 +71,11 @@ public class Expense {
 		this.participantPayer = participant;
 	}
 
-	public List<Participant> getParticipants() {
+	public Set<Participant> getParticipants() {
 		return this.participants;
 	}
 
-	public void setParticipants(List<Participant> participants) {
+	public void setParticipants(Set<Participant> participants) {
 		this.participants = participants;
 	}
 
