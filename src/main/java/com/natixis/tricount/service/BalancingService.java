@@ -6,6 +6,7 @@ import com.natixis.tricount.entity.Expense;
 import com.natixis.tricount.entity.ExpenseList;
 import com.natixis.tricount.entity.Participant;
 import com.natixis.tricount.repository.ExpenseListRepository;
+import com.natixis.tricount.repository.ExpenseRepository;
 import com.natixis.tricount.repository.ParticpantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
