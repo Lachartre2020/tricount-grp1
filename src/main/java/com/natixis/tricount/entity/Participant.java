@@ -1,7 +1,9 @@
 package com.natixis.tricount.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -22,7 +24,7 @@ public class Participant {
 	@JoinTable(name = "beneficiaire",
 			joinColumns = @JoinColumn(name = "participant_id"),
 			inverseJoinColumns = @JoinColumn(name = "expense_id"))
-	private List<Expense> expenses = new ArrayList<>();
+	private Set<Expense> expenses = new HashSet<>();
 
 	@Transient
 	private Float balance;
@@ -63,11 +65,11 @@ public class Participant {
 		this.expenseList = expenseList;
 	}
 	
-	public List<Expense> getExpense() {
+	public Set<Expense> getExpense() {
 		return this.expenses;
 	}
 	
-	public void setExpense(List<Expense> expenses) {
+	public void setExpense(Set<Expense> expenses) {
 		this.expenses = expenses;
 	}
 
