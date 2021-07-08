@@ -7,6 +7,7 @@ import com.natixis.tricount.service.ExpensesOfListSrevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,4 +57,20 @@ public class ExpensesController {
     	return "redirect:/lists/{idList}/expenses";
     }
 
+//    @GetMapping("/expenses/delete/{idExpense}")
+//    public String getDeleteExpenseOfList(@PathVariable Long idExpense) {
+//    	System.out.println("get delete");
+//		return "/expenses/delete/{idExpense}";
+//    	
+//    }
+    
+    @PostMapping("/expenses/delete/{idList}/{idExpense}")
+    public String deleteExpenseOfList(@PathVariable Long idExpense, @PathVariable Long idList) {
+    	System.out.println("delete");	
+    	if (idExpense !=null && idList !=null) {
+        		expensesOfListSrevice.deleteExpenseList(idExpense);
+        		return "redirect:/lists/{idList}/expenses";
+    	}
+    	return "redirect:/lists/{idList}/expenses";
+    }
 }
