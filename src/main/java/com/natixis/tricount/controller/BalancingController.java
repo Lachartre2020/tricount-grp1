@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,16 +26,12 @@ public class BalancingController {
     public String getBalancingPage(Model model, @PathVariable Long idList) {
 
         if (idList != null) {
-
             Optional<ExpenseList> optionalExpenseList = expenseListService.findById(idList);
-            ExpenseList expenseList = new ExpenseList();
-            List<Balancing> balancingList = new ArrayList<>();
-            List<AmountDistribution> amountDistributionList = new ArrayList<>();
 
             if (optionalExpenseList.isPresent()) {
-                expenseList = optionalExpenseList.get();
-                balancingList = balancingService.getBalacingPage(idList);
-                amountDistributionList = balancingService.getAmountDistributionList(balancingList);
+                ExpenseList expenseList = optionalExpenseList.get();
+                List<Balancing> balancingList = balancingService.getBalacingPage(idList);
+                List<AmountDistribution> amountDistributionList = balancingService.getAmountDistributionList(balancingList);
                 model.addAttribute("expenseList",expenseList);
                 model.addAttribute("balancingList", balancingList);
                 model.addAttribute("whoOwesWhomList", amountDistributionList);
