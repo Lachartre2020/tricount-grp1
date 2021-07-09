@@ -88,11 +88,12 @@ public class BalancingService {
             while (refund > 0 && ascendingBalancingList.size() > 0 ) {
                 Balancing ascendingBalancing = ascendingBalancingList.get(0);
                 refund = refund + ascendingBalancing.getAccountBalance();
+
                 if (ascendingBalancing.getIdParticipant() != balancing.getIdParticipant()) {
                     // un participant ne pas etre se payer lui meme
                     amountDistributionList.add(new AmountDistribution(
                             ascendingBalancing.getIdParticipant(),ascendingBalancing.getFirstName(),ascendingBalancing.getLastName(),
-                            Math.abs(Math.abs(refund) - Math.abs(ascendingBalancing.getAccountBalance())),
+                            refund<0? Math.abs(Math.abs(refund) - Math.abs(ascendingBalancing.getAccountBalance())) : Math.abs(ascendingBalancing.getAccountBalance()),
                             balancing.getIdParticipant(),balancing.getFirstName(),balancing.getLastName()));
                 }
 
