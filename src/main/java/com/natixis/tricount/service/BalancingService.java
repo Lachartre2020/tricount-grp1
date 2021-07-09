@@ -117,9 +117,10 @@ public class BalancingService {
     public void startBalancing(List<AmountDistribution> amountDistributionList, Long idList) {
 
         for (AmountDistribution amountDistribution:amountDistributionList) {
-
             Expense expense = new Expense();
-            expense.setName("VIREMENT EQUILIBRAGE");
+            expense.setName("EQUILIBRAGE - VIREMENT de " + amountDistribution.getFirstNamePayer() + " " + amountDistribution.getLastNamePayer()
+                    + " vers " + amountDistribution.getFirstNameCollector() + " " + amountDistribution.getLastNameCollector()
+            );
             expense.setAmount(amountDistribution.getAmountDistribution());
             ExpenseList expenseList = expenseListRepository.findById(idList).get();
             expense.setExpenseList(expenseList);
@@ -129,6 +130,5 @@ public class BalancingService {
 
             amountDistribution.getIdCollector();
         }
-
     }
 }
