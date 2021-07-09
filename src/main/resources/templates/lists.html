@@ -98,22 +98,38 @@
 			</div>		
 		</div>
 	</div>
- 
- 	<!--Debut -- Gestion de la pagination --> 
- 	<!-- 
-	 <nav aria-label="Something">
-   		<ul class="pagination justify-content-center bg-light">
-      		<li class="page-item disabled">
-         		<a class="page-link" href="#" tabindex="-1">Previous</a>
-      		</li>
-      		<li class="page-item"><a class="page-link" href="#">1</a></li>
-      		<li class="page-item"><a class="page-link" href="#">2</a></li>
-      		<li class="page-item"><a class="page-link" href="#">3</a></li>
-      		<li class="page-item">
-         		<a class="page-link" href="#">Next</a>
-      		</li>
-   		</ul>
-	 </nav>
+
+ 	<!--Debut -- Gestion de la pagination -->
+	<div class="container" th:if="${totalPages>1}">
+		<div class="row">
+		 <nav aria-label="Something">
+			<ul class="pagination justify-content-center bg-light">
+				<li class="page-item" th:classappend="${currentPage==1} ? disabled : enabled">
+					<a class="page-link" th:href="@{/lists(size=${expenseList.size}, page=${currentPage}-1)}" tabindex="-1">Previous</a>
+				</li>
+				<li class="page-item" th:classappend="${currentPage==1} ? disabled : enabled">
+					<a class="page-link" th:href="@{/lists(size=${expenseList.size}, page=1)}" tabindex="-1">1</a>
+				</li>
+				<li class="page-item disabled" th:if="${currentPage>4}">
+					<a class="page-link" href="#">...</a>
+				</li>
+				<li class="page-item" th:if="${totalPages>2}" th:each="pageNo : ${#numbers.sequence(firstPageNo, lastPageNo)}" th:classappend="${pageNo == currentPage} ? disabled : enabled">
+					<a class="page-link" th:href="@{/lists(size=${expenseList.size}, page=${pageNo})}" th:if="${pageNo != currentPage}" th:text="${pageNo}" ></a>
+					<span class="page-link disabled" th:if="${pageNo == currentPage}" th:text="${pageNo}"></span>
+				</li>
+				<li class="page-item disabled" th:if="${currentPage <= (totalPages - 4)}">
+					<a class="page-link" href="#">...</a>
+				</li>
+				<li class="page-item" th:classappend="${currentPage==totalPages} ? disabled : enabled">
+					<a class="page-link" th:href="@{/lists(size=${expenseList.size}, page=${totalPages})}" th:text="${totalPages}"></a>
+				</li>
+				<li class="page-item" th:classappend="${currentPage==totalPages} ? disabled : enabled">
+					<a class="page-link" th:href="@{/lists(size=${expenseList.size}, page=${currentPage}+1)}">Next</a>
+				</li>
+			</ul>
+		 </nav>
+		</div>
+	</div>
 	 <!-- Fin -- Gestion de la pagination -->
 	
 
