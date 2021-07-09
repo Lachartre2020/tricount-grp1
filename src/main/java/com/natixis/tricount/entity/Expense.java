@@ -84,4 +84,15 @@ public class Expense {
 		participant.getExpense().add(this);
 	}
 
+	public void removeParticipants() {
+		for (Participant participant : new HashSet<>(participants)) {
+			removeParticipant(participant);
+		}
+	}
+
+	private void removeParticipant(Participant participant) {
+		this.getParticipants().remove(participant);
+		participant.getExpense().remove(this);
+	}
+
 }
