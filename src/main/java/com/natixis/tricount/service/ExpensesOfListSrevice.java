@@ -2,13 +2,13 @@ package com.natixis.tricount.service;
 
 import com.natixis.tricount.entity.Expense;
 import com.natixis.tricount.entity.ExpenseList;
+import com.natixis.tricount.entity.Participant;
 import com.natixis.tricount.repository.ExpenseListRepository;
 import com.natixis.tricount.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Service
@@ -36,6 +36,10 @@ public class ExpensesOfListSrevice {
 	}
 	
 	public void deleteExpenseList(Long idExpense) {
+		Expense expense = expenseRepository.findById(idExpense).get();
+//		expense.getParticipants().clear();
+		expense.removeParticipants();
+		expenseRepository.save(expense);
 		if (idExpense !=null) {
 			expenseRepository.deleteById(idExpense);
 		}
