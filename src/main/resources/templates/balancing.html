@@ -13,35 +13,11 @@
 <div class="row">&nbsp;</div>
 <div class="row">&nbsp;</div>
 <div class="row">&nbsp;</div>
+
 <div class="container">
 
     <h1 th:text="|Equilibrage de la liste de dépense - ${expenseList.name} |">Equilibrage d'une liste de dépense</h1>
     <div class="row">
-
-        <!-- Bouton -->
-        <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#startBalancingModal">
-            Lancer l'équilibrage
-        </button>
-        <div class="container">
-            <!-- Modal -->
-            <div class="modal fade" id="startBalancingModal" tabindex="-1" aria-labelledby="startBalancingModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="startBalancingModalLabel" th:text="'Voulez vous lancer l\'équilibrage de la liste ' + ${expenseList.name} + ' ?'"></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form  method="post" th:action="|@{/lists/balancing/}${expenseList.id}|" th:object="${whoOwesWhomList}">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                <button type="submit" class="btn btn-danger">Oui</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Fin Bouton -->
 
     <div class="container">
         <div class="row">&nbsp;</div>
@@ -70,23 +46,56 @@
             </div>
         </div>
         <div class="row">&nbsp;</div>
-        <h2>Qui doit combien à qui ?</h2>
-        <div class="row">&nbsp;</div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="table-responsive">
-                    <table class="table table-bordred table-striped">
-                        <tbody>
-                        <tr th:each="amountDistribution : ${whoOwesWhomList}">
-                            <td th:text="|${amountDistribution.firstNamePayer} ${amountDistribution.lastNamePayer} doit ${amountDistribution.amountDistribution} euros à ${amountDistribution.firstNameCollector} ${amountDistribution.lastNameCollector} |">who owes whom</td>
 
-                        </tr>
-                        </tbody>
-                    </table>
+        <h2>Qui doit combien à qui ?</h2>
+
+        <div th:if="${!whoOwesWhomList.empty}">
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordred table-striped">
+                            <tbody>
+                            <tr th:each="amountDistribution : ${whoOwesWhomList}">
+                                <td th:text="|${amountDistribution.firstNamePayer} ${amountDistribution.lastNamePayer} doit ${amountDistribution.amountDistribution} euros à ${amountDistribution.firstNameCollector} ${amountDistribution.lastNameCollector} |">who owes whom</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+
+            <!-- Bouton -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#startBalancingModal">
+                Lancer l'équilibrage
+            </button>
+            <div class="container">
+                <!-- Modal -->
+                <div class="modal fade" id="startBalancingModal" tabindex="-1" aria-labelledby="startBalancingModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="startBalancingModalLabel" th:text="'Voulez vous lancer l\'équilibrage de la liste ' + ${expenseList.name} + ' ?'"></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form  method="post" th:action="|@{/lists/balancing/}${expenseList.id}|" th:object="${whoOwesWhomList}">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                    <button type="submit" class="btn btn-danger">Oui</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Fin Bouton -->
+            <!-- Fin IF -->
         </div>
-    </div>
+
+        <div th:unless="${!whoOwesWhomList.empty}">
+            <h2>Equilibrage parfait ! les bons comptes font les bons amis :) </h2>
+        </div>
+
     <footer th:replace="fragments/footer.html :: bottom"></footer>
 </body>
 </html>
