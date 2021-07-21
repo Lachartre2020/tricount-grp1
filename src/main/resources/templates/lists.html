@@ -100,48 +100,9 @@
 	</div>
 
  	<!--Debut -- Gestion de la pagination -->
-	<div class="container" th:if="${totalPages>1}">
-		<div class="row">
-		 <nav aria-label="Something">
-			<ul class="pagination justify-content-center bg-light">
-				<li class="page-item" th:classappend="${currentPage==1} ? disabled : enabled">
-					<a class="page-link" th:href="@{/lists(size=${expenseList.size}, page=${currentPage}-1)}" tabindex="-1">Previous</a>
-				</li>
-				<li class="page-item" th:classappend="${currentPage==1} ? disabled : enabled">
-					<a class="page-link" th:href="@{/lists(size=${expenseList.size}, page=1)}" tabindex="-1">1</a>
-				</li>
-				<li class="page-item disabled" th:if="${currentPage>4}">
-					<a class="page-link" href="#">...</a>
-				</li>
-				<li class="page-item" th:if="${totalPages>2}" th:each="pageNo : ${#numbers.sequence(firstPageNo, lastPageNo)}" th:classappend="${pageNo == currentPage} ? disabled : enabled">
-					<a class="page-link" th:href="@{/lists(size=${expenseList.size}, page=${pageNo})}" th:if="${pageNo != currentPage}" th:text="${pageNo}" ></a>
-					<span class="page-link disabled" th:if="${pageNo == currentPage}" th:text="${pageNo}"></span>
-				</li>
-				<li class="page-item disabled" th:if="${currentPage <= (totalPages - 4)}">
-					<a class="page-link" href="#">...</a>
-				</li>
-				<li class="page-item" th:classappend="${currentPage==totalPages} ? disabled : enabled">
-					<a class="page-link" th:href="@{/lists(size=${expenseList.size}, page=${totalPages})}" th:text="${totalPages}"></a>
-				</li>
-				<li class="page-item" th:classappend="${currentPage==totalPages} ? disabled : enabled">
-					<a class="page-link" th:href="@{/lists(size=${expenseList.size}, page=${currentPage}+1)}">Next</a>
-				</li>
-			</ul>
-		 </nav>
-		</div>
-	</div>
+	<div th:replace="fragments/paginable.html :: paginable"></div>
 	 <!-- Fin -- Gestion de la pagination -->
-	
 
-		<!-- Créer une liste de dépenses -->
-<!--		<h1> Create an expenses list : </h1>-->
-<!--		<form method="post" th:action="@{/lists}" th:object="${expenseList}">-->
-<!--		    <div>-->
-<!--		    	<label for="expenseList-name">Name:</label>-->
-<!--		   		<input type="text" id="expenseList-name" name="name" placeholder="name of the list">-->
-<!--		    </div>-->
-<!--		    <input type="submit" value="Send">-->
-<!--		</form>-->
-		<footer th:replace="fragments/footer.html :: bottom"></footer>
+	<footer th:replace="fragments/footer.html :: bottom"></footer>
 	</body>
 </html>

@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+</head>
+<body>
+<!--Debut -- Gestion de la pagination -->
+<div class="container" th:fragment="paginable" th:if="${paginable.totalPages>1}">
+    <div class="row">
+        <nav aria-label="Something">
+            <ul class="pagination justify-content-center bg-light">
+                <li class="page-item" th:classappend="${paginable.currentPage==1} ? disabled : enabled">
+                    <a class="page-link" th:href="@{/lists(size=${paginable.pageSize}, page=${paginable.currentPage}-1)}" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item" th:classappend="${paginable.currentPage==1} ? disabled : enabled">
+                    <a class="page-link" th:href="@{/lists(size=${paginable.pageSize}, page=1)}" tabindex="-1">1</a>
+                </li>
+                <li class="page-item disabled" th:if="${paginable.currentPage>4}">
+                    <a class="page-link" href="#">...</a>
+                </li>
+                <li class="page-item" th:if="${paginable.totalPages>2}" th:each="pageNo : ${#numbers.sequence(paginable.firstPageNo, paginable.lastPageNo)}" th:classappend="${pageNo == paginable.currentPage} ? disabled : enabled">
+                    <a class="page-link" th:href="@{/lists(size=${paginable.pageSize}, page=${pageNo})}" th:if="${pageNo != paginable.currentPage}" th:text="${pageNo}" ></a>
+                    <span class="page-link disabled" th:if="${pageNo == paginable.currentPage}" th:text="${pageNo}"></span>
+                </li>
+                <li class="page-item disabled" th:if="${paginable.currentPage <= (paginable.totalPages - 4)}">
+                    <a class="page-link" href="#">...</a>
+                </li>
+                <li class="page-item" th:classappend="${paginable.currentPage==paginable.totalPages} ? disabled : enabled">
+                    <a class="page-link" th:href="@{/lists(size=${paginable.pageSize}, page=${paginable.totalPages})}" th:text="${paginable.totalPages}"></a>
+                </li>
+                <li class="page-item" th:classappend="${paginable.currentPage==paginable.totalPages} ? disabled : enabled">
+                    <a class="page-link" th:href="@{/lists(size=${paginable.pageSize}, page=${paginable.currentPage}+1)}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<!-- Fin -- Gestion de la pagination -->
+</body>
+</html>

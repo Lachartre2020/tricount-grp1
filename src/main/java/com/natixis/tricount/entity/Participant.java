@@ -26,6 +26,9 @@ public class Participant {
 			inverseJoinColumns = @JoinColumn(name = "expense_id"))
 	private Set<Expense> expenses = new HashSet<>();
 
+	@OneToMany(mappedBy = "participantPayer")
+	private List<Expense> expensesOfPayer;
+
 	@Transient
 	private Float balance;
 	
@@ -79,5 +82,13 @@ public class Participant {
 
 	public void setBalance(Float balance) {
 		this.balance = balance;
+	}
+
+	public List<Expense> getExpensesOfPayer() {
+		return expensesOfPayer;
+	}
+
+	public void setExpensesOfPayer(List<Expense> expensesOfPayer) {
+		this.expensesOfPayer = expensesOfPayer;
 	}
 }

@@ -35,12 +35,21 @@
 			      </div>
 	
 			      <div class="modal-body">
-			        <form  method="post" th:action="@{'/lists/' + ${expenseList.id} + '/expense'}" th:object="${expense}">
+			        <form  method="post" th:action="@{'/lists/' + ${expenseList.id} + '/expense'}" th:object="${expenses}">
+				       <!--  <div class="mb-3" th:object="${participants}">-->
 				       <div class="mb-3">
-				        <label for="name" class="col-form-label">Nom de la dépense:</label>
+				        <label for="name" class="col-form-label" >Nom de la dépense:</label>
 				        <input type="text" id="name" name="name" class="form-control" required>
 				        <label for="amount" class="col-form-label">Montant de la dépense: </label>
 				        <input type="text" id="amount" name="amount" class="form-control" required>
+			    		<!-- Liste de choix  -->
+			    		<div class="col-md-4">
+   							 <label for="participant-list" class="col-form-label">Nom du payeur</label>
+   							 <select name="idPayeur" id="participant-list">
+   									 <option selected>Choose...</option>   
+               						 <option th:each="participant : ${participants}" th:value="${participant.id}" th:text="${participant.name}"></option>
+           					 </select>
+  						</div>
 				      </div>
 				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 				        <button type="submit" class="btn btn-primary">Add</button>
@@ -51,6 +60,7 @@
 		  	  </div>
 			</div>
 		</div>
+		
         <div class="col-md-2">
             <a class="btn btn-primary" th:href="|@{/lists/}${expenseList.id}@{/balancing}|" role="button">Afficher l'équilibrage</a>
         </div>
@@ -67,16 +77,17 @@
                 <thead>
                 <tr>
                     <th scope="col">Nom de la dépense</th>
-                    <th scope="col">Nb de participant</th>
+                    <th scope="col">Nb de bénéficiaire</th>
                     <th scope="col">Montant</th>
                     <th scope="col" class="text-center">Détail</th>
                     <th scope="col" class="text-center">Supprimer</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="expense : ${expensesOfList}">
+                <!-- <tr th:each="expense : ${expensesOfList}">  -->
+                <tr th:each="expense : ${expenses}">
                     <td th:text="${expense.name}">name</td>
-                    <td th:text="${expense.id}">id</td>
+                    <td th:text="${expense.participants.size()}">id</td>
                     <td th:text="${expense.amount}">amount</td>
                     <td style="width: 10%;" class="text-center">
                         <a class="table-link" th:href="|@{/expenses/}${expense.id}|">

@@ -2,6 +2,7 @@ package com.natixis.tricount.controller;
 
 import com.natixis.tricount.entity.Expense;
 import com.natixis.tricount.entity.ExpenseList;
+import com.natixis.tricount.entity.Participant;
 import com.natixis.tricount.service.ExpenseListService;
 import com.natixis.tricount.service.ExpensesOfListSrevice;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,41 +29,33 @@ public class ExpensesController {
 
     @GetMapping("/lists/{idList}/expenses")
     public String getExpensesListPage(Model model, @PathVariable Long idList) {
-
         if (idList != null) {
             Optional<ExpenseList> optionalExpenseList = expenseListService.findById(idList);
             ExpenseList expenseList = new ExpenseList();
             List<Expense> expenses = new ArrayList<>();
+            List<Participant> participants = new ArrayList<>();
             if (optionalExpenseList.isPresent()) {
                 expenseList = optionalExpenseList.get();
                 expenses = optionalExpenseList.get().getExpenses();
+                participants = optionalExpenseList.get().getParticipants();
                 model.addAttribute("expenseList",expenseList);
-                model.addAttribute("expensesOfList",expenses);
+                model.addAttribute("expenses",expenses);
+                model.addAttribute("participants",participants);
                 return "expensesOfList";
             }
-
         }
-
         return "redirect:/lists";
     }
     
     @PostMapping("/lists/{idList}/expense")
-    public String addExpenseOfList(@PathVariable Long idList,@ModelAttribute Expense expense) {
-    	System.out.println("Post : ExpensesController");
+    public String addExpenseOfList(@PathVariable Long idList,@ModelAttribute Expense expense, Long idPayeur) {
     	if (idList != null) {
-    		expensesOfListSrevice.addExpenseOfList(idList,expense);
-    		//todo => Renvoyer sur la page de "détails d'une depense"
-    		return "redirect:/lists/{idList}/expenses";
+    		expensesOfListSrevice.addExpenseOfList(idList, expense, idPayeur);	
+    		return "redirect:/expenses/" + expense.getId();
     	}
-    	return "redirect:/lists/{idList}/expenses";
+    	return "redirect:/lists/" + idList + "/expenses";
     }
 
-//    @GetMapping("/expenses/delete/{idExpense}")
-//    public String getDeleteExpenseOfList(@PathVariable Long idExpense) {
-//    	System.out.println("get delete");
-//		return "/expenses/delete/{idExpense}";
-//    	
-//    }
     
     @PostMapping("/expenses/delete/{idList}/{idExpense}")
     public String deleteExpenseOfList(@PathVariable Long idExpense, @PathVariable Long idList) {
