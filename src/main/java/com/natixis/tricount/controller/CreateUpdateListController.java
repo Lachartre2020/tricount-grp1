@@ -4,7 +4,6 @@ import com.natixis.tricount.entity.ExpenseList;
 import com.natixis.tricount.entity.Participant;
 import com.natixis.tricount.service.CreateUpdateListService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +29,7 @@ public class CreateUpdateListController
         }
         model.addAttribute("expenseList", expenseList);
         model.addAttribute("participants", expenseList.getParticipants());
+
         return "createUpdateList";
     }
 
@@ -48,20 +48,16 @@ public class CreateUpdateListController
         return "redirect:/lists/"+expenseList.get().getId();
     }
 
-    @GetMapping("/listss")
-    public String createUpdateListGet(Model model)
-    {
-        ExpenseList expenseList = new ExpenseList();
-        model.addAttribute("expenseList", expenseList);
-        return "createUpdateList";
-    }
-
     @PostMapping("/participant/delete/{idParticipant}/{idExpenseList}")
-    public String removeParticipantInList(@PathVariable Long idParticipant,@PathVariable Long idExpenseList)
+    public String removeParticipantInList(Model model, @PathVariable Long idParticipant,@PathVariable Long idExpenseList)
     {
-        createUpdateListService.removeParticipantList(idParticipant);
-//        expenseList.get().getParticipants().add(participant);
-//        createUpdateListService.save(expenseList.get());
+        int code = createUpdateListService.removeParticipantList(idParticipant);
+        if(code == 1)
+        {
+            model.addAttribute("errorMessage","Impossible de supprimer le participant car il est référencé en tant que bénéficiaire et/ou payeur.");
+            model.addAttribute("idExpenseList", idExpenseList);
+            return "errorDeleteParticipant";
+        }
         return "redirect:/lists/"+idExpenseList;
     }
 }
