@@ -55,13 +55,15 @@
 		<div class="row">
        		<div class="col-md-12">
 		        <div class="table-responsive">	
-					<table id="mytable" class="table table-bordred table-striped">
+					<table class="table table-bordred table-striped">
+						<thead>
 							<tr>
 								<th>Id</th>
 								<th>Name</th>
 								<th>Details</th>
 								<th>Edit</th>
-							</tr>								
+							</tr>
+						</thead>
 						<tbody>
 		    				<tr th:each="list : ${expenseList}">
 		        				<td th:text="${list.id}">id</td>
