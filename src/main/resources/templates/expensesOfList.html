@@ -17,13 +17,20 @@
 
 	<h1 th:text="|Liste de dépense - ${expenseList.name} |">Liste de dépense</h1>
 	<div class="row">
+
         <h2 class="col-md-8" th:text="|Nombre de participants : ${expenseList.participants.size()} |">Nombre de participants</h2>
-	    <div class="col-md-2">
-	   		<!-- Button trigger modal -->
-			<button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-	 		 	Ajouter une dépense
+	    <div class="col-md-2" th:if="${expenseList.participants.size() == 0}">
+			<!-- Button trigger modal -->
+			<button title="Vous ne pouvez pas ajouter de dépense car il n'y a pas de participant à la liste" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled>
+				Ajouter une dépense
 			</button>
-	
+			<a title="Vous ne pouvez pas ajouter de dépense car il n'y a pas de participant à la liste" th:href="'/lists/' + ${expenseList.id}" id="depenseListEdit" name="depenseListEdit" class="btn btn-primary">Ajouter des participants</a>
+		</div>
+		<div class="col-md-2" th:unless="${expenseList.participants.size() == 0}">
+			<!-- Button trigger modal -->
+			<button th:unless="${expenseList.participants.size() == 0}" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+				Ajouter une dépense
+			</button>
 			<!-- Modal -->
 			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog">

@@ -38,10 +38,16 @@
 
 <div class="container">
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Ajouter un participant
-    </button>
-    <a th:href="'/lists/' + ${expenseList.id} + '/expenses'" id="depenseListDetail" name="depenseListDetail" class="btn btn-primary">Détail de la liste de dépense</a>
+    <div class="row align-items-center">
+        <div class="col-sm-9">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Ajouter un participant
+            </button>
+        </div>
+        <div class="col-sm-3">
+            <a th:href="'/lists/' + ${expenseList.id} + '/expenses'" id="depenseListDetail" name="depenseListDetail" class="btn btn-primary">Détail de la liste de dépense</a>
+        </div>
+    </div>
 </div>
 
 <div class="container">
