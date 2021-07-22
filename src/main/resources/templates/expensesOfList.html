@@ -37,22 +37,22 @@
 			      <div class="modal-body">
 			        <form  method="post" th:action="@{'/lists/' + ${expenseList.id} + '/expense'}" th:object="${expenses}">
 				       <!--  <div class="mb-3" th:object="${participants}">-->
-				       <div class="mb-3">
+				       <div class="mb-3" th:object="${numbers}">
 				        <label for="name" class="col-form-label" >Nom de la dépense:</label>
 				        <input type="text" id="name" name="name" class="form-control" required>
-				        <label for="amount" class="col-form-label">Montant de la dépense: </label>
-				        <input type="text" id="amount" name="amount" class="form-control" required>
+				        <label for="amount" class="col-form-label" >Montant de la dépense: </label>
+				        <input type="number" step=".01" pattern="[0-9]+([.,][0-9]+)?" id="amount" name="amount" class="form-control" required>
 			    		<!-- Liste de choix  -->
 			    		<div class="col-md-4">
    							 <label for="participant-list" class="col-form-label">Nom du payeur</label>
-   							 <select name="idPayeur" id="participant-list">
-   									 <option selected>Choose...</option>   
-               						 <option th:each="participant : ${participants}" th:value="${participant.id}" th:text="${participant.name}"></option>
+   							 <select name="idPayeur" id="participant-list" required >
+   								 <option selected>Choisir...</option>   
+               					 <option th:each="participant : ${participants}" th:value="${participant.id}" th:text="${participant.name}"></option>
            					 </select>
   						</div>
 				      </div>
-				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				        <button type="submit" class="btn btn-primary">Add</button>
+				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">retour</button>
+				        <button type="submit" class="btn btn-primary">Ajouter</button>
 			      	</form>
 			      </div>
 			    
@@ -139,6 +139,14 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="container">
+	<div class="row">
+	    <div class="col-md-2">
+			<a th:href="@{/lists}" id="retour" name="retour" class="btn btn-primary">Retour</a>
+		</div>
+	</div>
 </div>
 <footer th:replace="fragments/footer.html :: bottom"></footer>
 </body>
