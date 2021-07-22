@@ -5,6 +5,7 @@ import com.natixis.tricount.dto.Balancing;
 import com.natixis.tricount.entity.Expense;
 import com.natixis.tricount.entity.ExpenseList;
 import com.natixis.tricount.entity.Participant;
+import com.natixis.tricount.mail.Mail;
 import com.natixis.tricount.repository.ExpenseListRepository;
 import com.natixis.tricount.repository.ExpenseRepository;
 import com.natixis.tricount.repository.ParticpantRepository;
@@ -27,6 +28,9 @@ public class BalancingService {
 
     @Autowired
     private ExpenseRepository expenseRepository;
+
+    @Autowired
+    private Mail mail;
 
     public List<Balancing> getBalacingPage(Long idList) {
         List<Expense> expenses = new ArrayList<>();
@@ -147,6 +151,7 @@ public class BalancingService {
             expenseRepository.save(expense);
 
             amountDistribution.getIdCollector();
+            mail.sendEmail();
         }
     }
 }
