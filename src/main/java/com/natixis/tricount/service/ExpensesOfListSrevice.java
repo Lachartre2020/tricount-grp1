@@ -23,12 +23,11 @@ public class ExpensesOfListSrevice {
     private ExpenseListRepository expenseListRepository;
     
     @Autowired
-    private ParticpantRepository ParticipantRepository;
+    private ParticpantRepository participantRepository;
 
     public Optional<Expense> findById(Long id) { return expenseRepository.findById(id); }
 
 	public void addExpenseOfList(Long idList, Expense expense, Long idPayeur) {
-		System.out.println("addExpenseOfList - " + idList + " Id payeur : " + idPayeur);
 	 	ExpenseList expenseList = new ExpenseList();
     	if(idList != null ) {
     		Optional<ExpenseList> optionalExpenseList = expenseListRepository.findById(idList);
@@ -37,13 +36,21 @@ public class ExpensesOfListSrevice {
     			System.out.println("if");
     			expenseList = optionalExpenseList.get();
     			expense.setExpenseList(expenseList);
-    			expense.setParticipantPayer(ParticipantRepository.getById(idPayeur));
-    			// Par defaut : participant beneficiaire valorisé par payeur
-    			//Set<Participant> participantBeneficiaire = new ArrayList<Participant>();
-    			//participantBeneficiaire.add((ParticipantRepository.getById(idPayeur)));
-    			//expense.setParticipants(participantBeneficiaire);
-    			System.out.println("avant save");
+    			expense.setParticipantPayer(participantRepository.getById(idPayeur));
     	    	expenseRepository.save(expense);
+    	    	
+    			// Par defaut : participant beneficiaire valorisé par payeur
+    			Expense expenseBeneficiaire = expenseRepository.save(expenseRepository.getById(expense.getId()));
+    			Optional<Participant> optionalBeneficiaire = participantRepository.findById(participantRepository.getById(idPayeur).getId());
+    			if (optionalBeneficiaire.isPresent()) {
+    				Participant beneficiaire = new Participant();
+    				beneficiaire = optionalBeneficiaire.get();
+    				beneficiaire.getExpense().add(expenseBeneficiaire);
+    				participantRepository.save(beneficiaire);
+    			}
+    			
+    			//expense.addOneParticipantBeneficiary(ParticipantRepository.getById(idPayeur));
+    	    	//expenseRepository.save(expense);
     		}
     	}
 	}
@@ -57,4 +64,5 @@ public class ExpensesOfListSrevice {
 			expenseRepository.deleteById(idExpense);
 		}
 	}
+	
 }
