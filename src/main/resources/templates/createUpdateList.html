@@ -41,6 +41,7 @@
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Ajouter un participant
     </button>
+    <a th:href="'/lists/' + ${expenseList.id} + '/expenses'" id="depenseListDetail" name="depenseListDetail" class="btn btn-primary">Détail de la liste de dépense</a>
 </div>
 
 <div class="container">
@@ -117,7 +118,13 @@
         </tr>
         </tbody>
     </table>
+
+    <a th:href="'/lists/'" id="depenseListDetail1" name="depenseListDetail1" class="btn btn-primary">Retour aux listes de dépenses</a>
 </div>
+
+<div class="container">
+</div>
+
 <footer th:replace="fragments/footer.html :: bottom"></footer>
 </body>
 </html>
