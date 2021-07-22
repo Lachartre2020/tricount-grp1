@@ -71,6 +71,7 @@
         <div class="col-md-2">
             <a class="btn btn-primary" th:href="|@{/lists/}${expenseList.id}@{/balancing}|" role="button">Afficher l'équilibrage</a>
         </div>
+	</div>
 </div>
 
 <br>
@@ -95,7 +96,7 @@
                 <tr th:each="expense : ${expenses}">
                     <td th:text="${expense.name}">name</td>
                     <td th:text="${expense.participants.size()}">id</td>
-                    <td th:text="${expense.amount}">amount</td>
+                    <td th:text="${#numbers.formatCurrency(expense.amount)}">amount</td>
                     <td style="width: 10%;" class="text-center">
                         <a class="table-link" th:href="|@{/expenses/}${expense.id}|">
                             <span class="fa-stack">

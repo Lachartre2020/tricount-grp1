@@ -17,7 +17,7 @@
 <div class="container">
 
     <h1 th:text="|Equilibrage de la liste de dépense - ${expenseList.name} |">Equilibrage d'une liste de dépense</h1>
-    <div class="row">
+    <div class="row"> </div>
 
     <div class="container">
         <div class="row">&nbsp;</div>
@@ -38,7 +38,7 @@
                         <tr th:each="balancing : ${balancingList}">
                             <td th:text="${balancing.firstName}">first name</td>
                             <td th:text="${balancing.lastName}">last name</td>
-                            <td th:text="${balancing.accountBalance}">account balance</td>
+                            <td th:text="${#numbers.formatCurrency(balancing.accountBalance)}">account balance</td>
                         </tr>
                         </tbody>
                     </table>
@@ -57,7 +57,7 @@
                         <table class="table table-bordred table-striped">
                             <tbody>
                             <tr th:each="amountDistribution : ${whoOwesWhomList}">
-                                <td th:text="|${amountDistribution.firstNamePayer} ${amountDistribution.lastNamePayer} doit ${amountDistribution.amountDistribution} euros à ${amountDistribution.firstNameCollector} ${amountDistribution.lastNameCollector} |">who owes whom</td>
+                                <td th:text="|${amountDistribution.firstNamePayer} ${amountDistribution.lastNamePayer} doit ${#numbers.formatCurrency(amountDistribution.amountDistribution)} à ${amountDistribution.firstNameCollector} ${amountDistribution.lastNameCollector} |">who owes whom</td>
                             </tr>
                             </tbody>
                         </table>
@@ -66,6 +66,9 @@
             </div>
 
             <!-- Bouton -->
+            <div class="row">&nbsp;</div>
+            <a th:href="'/lists/' + ${expenseList.id} + '/expenses'" name="retour" class="btn btn-primary">Retour</a>
+
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#startBalancingModal">
                 Lancer l'équilibrage
             </button>
@@ -93,9 +96,13 @@
         </div>
 
         <div th:unless="${!whoOwesWhomList.empty}">
+            <div class="row">&nbsp;</div>
             <h2>Equilibrage parfait ! les bons comptes font les bons amis :) </h2>
+            <div class="row">&nbsp;</div>
+            <a th:href="'/lists/' + ${expenseList.id} + '/expenses'" name="retour" class="btn btn-primary">Retour</a>
         </div>
-
-    <footer th:replace="fragments/footer.html :: bottom"></footer>
+    </div>
+</div>
+<footer th:replace="fragments/footer.html :: bottom"></footer>
 </body>
 </html>

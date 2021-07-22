@@ -11,6 +11,9 @@ import com.natixis.tricount.repository.ParticpantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.*;
 
 @Service
@@ -54,10 +57,10 @@ public class BalancingService {
             amountByPerson = expense.getAmount()/(expense.getParticipants().size());
             if (expense.getParticipantPayer() != null) {
                 Participant participant = participantRepository.getById(expense.getParticipantPayer().getId());
-                participant.setBalance(participant.getBalance() + amountExpense);
+                participant.setBalance(roundedAmount(participant.getBalance() + amountExpense));
                 for (Participant beneficiaire : expense.getParticipants() ) {
                     participant = participantRepository.getById(beneficiaire.getId());
-                    participant.setBalance(participant.getBalance() - amountByPerson);
+                    participant.setBalance(roundedAmount(participant.getBalance() - amountByPerson));
                 }
 
             }
@@ -65,6 +68,16 @@ public class BalancingService {
 
         }
 
+    }
+
+    public Float roundedAmount(Float amount) {
+        DecimalFormatSymbols dfSymbols = new DecimalFormatSymbols();
+        dfSymbols.setDecimalSeparator('.');
+        DecimalFormat df = new DecimalFormat("#0.00");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        df.setDecimalFormatSymbols(dfSymbols);
+        String result = df.format(amount);
+        return new Float(result);
     }
 
     public List<AmountDistribution> getAmountDistributionList(List<Balancing> balancingList) {
@@ -88,17 +101,21 @@ public class BalancingService {
         Collections.sort(ascendingBalancingList, comparator);
 
         for (Balancing balancing : descendingBalancingList) {
+
             float refund = balancing.getAccountBalance();
             while (refund > 0 && ascendingBalancingList.size() > 0 ) {
                 Balancing ascendingBalancing = ascendingBalancingList.get(0);
                 refund = refund + ascendingBalancing.getAccountBalance();
 
                 if (ascendingBalancing.getIdParticipant() != balancing.getIdParticipant()) {
-                    // un participant ne pas etre se payer lui meme
-                    amountDistributionList.add(new AmountDistribution(
-                            ascendingBalancing.getIdParticipant(),ascendingBalancing.getFirstName(),ascendingBalancing.getLastName(),
-                            refund<0? Math.abs(Math.abs(refund) - Math.abs(ascendingBalancing.getAccountBalance())) : Math.abs(ascendingBalancing.getAccountBalance()),
-                            balancing.getIdParticipant(),balancing.getFirstName(),balancing.getLastName()));
+                    // un participant ne pas se payer lui meme
+                    Float amountDistribution = refund<0? Math.abs(Math.abs(refund) - Math.abs(ascendingBalancing.getAccountBalance())) : Math.abs(ascendingBalancing.getAccountBalance());
+                    // on ecarte les virements à zéro
+                    if (roundedAmount(amountDistribution) != 0) {
+                        amountDistributionList.add(new AmountDistribution(
+                            ascendingBalancing.getIdParticipant(), ascendingBalancing.getFirstName(), ascendingBalancing.getLastName(),
+                            amountDistribution, balancing.getIdParticipant(), balancing.getFirstName(), balancing.getLastName()));
+                    }
                 }
 
                 if (refund >= 0) {
@@ -110,6 +127,7 @@ public class BalancingService {
 
             }
         }
+
 
         return amountDistributionList;
     }
