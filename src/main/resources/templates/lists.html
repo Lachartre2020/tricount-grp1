@@ -58,15 +58,13 @@
 					<table class="table table-bordred table-striped">
 						<thead>
 							<tr>
-								<th>Id</th>
-								<th>Name</th>
-								<th>Details</th>
-								<th>Edit</th>
+								<th>Nom de la liste</th>
+								<th>Détails</th>
+								<th>Modification</th>
 							</tr>
 						</thead>
 						<tbody>
 		    				<tr th:each="list : ${expenseList}">
-		        				<td th:text="${list.id}">id</td>
 		        				<td th:text="${list.name}">name</td>
 
 								<td style="width: 10%;">
