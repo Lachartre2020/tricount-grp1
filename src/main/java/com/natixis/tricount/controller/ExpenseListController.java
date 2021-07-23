@@ -34,10 +34,10 @@ public class ExpenseListController {
 		model.addAttribute("expenseList",expensiveListPage);
 
 		int totalPages = expensiveListPage.getTotalPages();
-		if (totalPages > 0) {
+	//	if (totalPages > 0) {
 			Paginable paginable = new Paginable(currentPage,pageSize,totalPages);
 			model.addAttribute("paginable2", paginable);
-		}
+	//	}
 
 		return "lists";
 	}
