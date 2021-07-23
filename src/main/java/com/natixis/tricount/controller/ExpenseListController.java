@@ -28,7 +28,7 @@ public class ExpenseListController {
 									 @RequestParam("size") Optional<Integer> size) {
 
 		int currentPage = page.orElse(1);
-		int pageSize = size.orElse(15);
+		int pageSize = size.orElse(8);
 
 		Page<ExpenseList> expensiveListPage = service.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 		model.addAttribute("expenseList",expensiveListPage);
@@ -36,7 +36,7 @@ public class ExpenseListController {
 		int totalPages = expensiveListPage.getTotalPages();
 		if (totalPages > 0) {
 			Paginable paginable = new Paginable(currentPage,pageSize,totalPages);
-			model.addAttribute("paginable", paginable);
+			model.addAttribute("paginable2", paginable);
 		}
 
 		return "lists";

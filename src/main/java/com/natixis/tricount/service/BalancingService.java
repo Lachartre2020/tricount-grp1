@@ -139,6 +139,7 @@ public class BalancingService {
 
     public void startBalancing(List<AmountDistribution> amountDistributionList, Long idList, EmailAddress emailAddress) {
         ExpenseList expenseList = expenseListRepository.findById(idList).get();
+        List<String> recapVirement = new ArrayList<>();
 
         for (AmountDistribution amountDistribution:amountDistributionList) {
             Expense expense = new Expense();
@@ -151,8 +152,12 @@ public class BalancingService {
             expense.addOneParticipantBeneficiary(participantRepository.findById(amountDistribution.getIdCollector()).get());
             expenseRepository.save(expense);
 
+            recapVirement.add("- VIREMENT de " + amountDistribution.getFirstNamePayer() + " " + amountDistribution.getLastNamePayer()
+                    + " vers " + amountDistribution.getFirstNameCollector() + " " + amountDistribution.getLastNameCollector()+" d'un montant de "
+            + amountDistribution.getAmountDistribution() + "€.");
+
             amountDistribution.getIdCollector();
         }
-        mail.sendEmail(emailAddress, expenseList);
+        mail.sendEmail(emailAddress, expenseList, recapVirement);
     }
 }
