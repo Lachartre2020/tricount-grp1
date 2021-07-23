@@ -2,6 +2,7 @@ package com.natixis.tricount.service;
 
 import com.natixis.tricount.dto.AmountDistribution;
 import com.natixis.tricount.dto.Balancing;
+import com.natixis.tricount.dto.EmailAddress;
 import com.natixis.tricount.entity.Expense;
 import com.natixis.tricount.entity.ExpenseList;
 import com.natixis.tricount.entity.Participant;
@@ -136,7 +137,8 @@ public class BalancingService {
         return amountDistributionList;
     }
 
-    public void startBalancing(List<AmountDistribution> amountDistributionList, Long idList) {
+    public void startBalancing(List<AmountDistribution> amountDistributionList, Long idList, EmailAddress emailAddress) {
+        ExpenseList expenseList = expenseListRepository.findById(idList).get();
 
         for (AmountDistribution amountDistribution:amountDistributionList) {
             Expense expense = new Expense();
@@ -144,14 +146,13 @@ public class BalancingService {
                     + " vers " + amountDistribution.getFirstNameCollector() + " " + amountDistribution.getLastNameCollector()
             );
             expense.setAmount(amountDistribution.getAmountDistribution());
-            ExpenseList expenseList = expenseListRepository.findById(idList).get();
             expense.setExpenseList(expenseList);
             expense.setParticipantPayer(participantRepository.findById(amountDistribution.getIdPayer()).get());
             expense.addOneParticipantBeneficiary(participantRepository.findById(amountDistribution.getIdCollector()).get());
             expenseRepository.save(expense);
 
             amountDistribution.getIdCollector();
-            mail.sendEmail();
         }
+        mail.sendEmail(emailAddress, expenseList);
     }
 }
