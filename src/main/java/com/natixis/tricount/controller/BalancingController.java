@@ -52,7 +52,6 @@ public class BalancingController {
     @PostMapping("/lists/balancing/{idList}")
     public String makeBalancing(Model model, @PathVariable Long idList,@ModelAttribute EmailAddress emailAddress) {
 
-        System.out.println( emailAddress.getEmailAddress());
         if (idList != null) {
 
             Optional<ExpenseList> optionalExpenseList = expenseListService.findById(idList);
