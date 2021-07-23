@@ -14,7 +14,8 @@ public class Mail
 
     public void sendEmail() {
         SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo("konyalidu89@gmail.com", "mevlana89@hotmail.com");
+        msg.setTo("mevlana89@hotmail.com");
+        msg.setFrom("");
 
         msg.setSubject("Testing from Spring Boot");
         msg.setText("Hello World \n Spring Boot Email");
