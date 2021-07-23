@@ -66,14 +66,14 @@
 							<tr>
 								<th>Nom</th>
 								<th>Prénom</th>
-								<th>Bénéficiaires</th>
+								<th class="text-center">Bénéficiaires</th>
 							</tr>								
 						</thead>
 						<tbody>
 			    			<tr th:each="beneficiaire,stat : ${wrapper.beneficiaireList}">
 							    <td th:text="${beneficiaire.getName()}"></td>
 								<td th:text="${beneficiaire.getFirstName()}"></td>
-								<td><input id="caseCheck" class="classCaseCheck" onclick="valid()" type="checkbox" name="listIdBeneficiaire" th:value="${beneficiaire.getIdBeneficiaire()}" th:checked="${beneficiaire.getSelected()}"/></td>
+								<td class="text-center"><input id="caseCheck" class="classCaseCheck" onclick="valid()" type="checkbox" name="listIdBeneficiaire" th:value="${beneficiaire.getIdBeneficiaire()}" th:checked="${beneficiaire.getSelected()}"/></td>
 							</tr>
 						</tbody> 
 					</table>							 

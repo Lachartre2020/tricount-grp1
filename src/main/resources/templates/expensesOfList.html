@@ -94,8 +94,9 @@
                     <td th:text="${expense.participants.size()}">id</td>
                     <td th:text="${#numbers.formatCurrency(expense.amount)}">amount</td>
                     <td style="width: 10%;" class="text-center">
-                        <a class="table-link" th:href="|@{/expenses/}${expense.id}|">
-                            <span class="fa-stack">
+					<!--<a class="table-link" th:href="|@{/expenses/}${expense.id}|">-->
+						<a class="table-link btn" th:href="|@{/expenses/}${expense.id}|">
+                            <span class="fa-stack" style="color:blue">
                                 <i class="fa fa-square fa-stack-2x"></i>
                                 <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
                             </span>
@@ -111,7 +112,7 @@
                     </td> -->
               		<td style="width: 10%;">
 		                <!-- Button trigger modal -->
-		                <button type="button" class="btn btn-light" data-bs-toggle="modal" th:data-bs-target="'#deleteExpenseModal' + ${expense.id}">
+		                <button type="button" class="btn" data-bs-toggle="modal" th:data-bs-target="'#deleteExpenseModal' + ${expense.id}">
 		                    <span class="fa-stack" style="color:red">
 		                        <i class="fa fa-square fa-stack-2x"></i>
 		                        <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
