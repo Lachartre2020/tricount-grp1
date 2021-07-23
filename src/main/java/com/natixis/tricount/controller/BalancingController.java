@@ -3,6 +3,7 @@ package com.natixis.tricount.controller;
 import com.natixis.tricount.dto.AmountDistribution;
 import com.natixis.tricount.dto.Balancing;
 // import com.natixis.tricount.dto.ListAmountDistributionDto;
+import com.natixis.tricount.dto.EmailAddress;
 import com.natixis.tricount.entity.ExpenseList;
 import com.natixis.tricount.service.BalancingService;
 import com.natixis.tricount.service.ExpenseListService;
@@ -37,9 +38,11 @@ public class BalancingController {
                 ExpenseList expenseList = optionalExpenseList.get();
                 List<Balancing> balancingList = balancingService.getBalacingPage(idList);
                 List<AmountDistribution> amountDistributionList = balancingService.getAmountDistributionList(balancingList);
+                EmailAddress emailAddress = new EmailAddress();
                 model.addAttribute("expenseList",expenseList);
                 model.addAttribute("balancingList", balancingList);
                 model.addAttribute("whoOwesWhomList", amountDistributionList);
+                model.addAttribute("emailAddress", emailAddress);
                 return "balancing";
             }
         }
@@ -47,8 +50,9 @@ public class BalancingController {
     }
 
     @PostMapping("/lists/balancing/{idList}")
-    public String makeBalancing(Model model, @PathVariable Long idList) {
+    public String makeBalancing(Model model, @PathVariable Long idList,@ModelAttribute EmailAddress emailAddress) {
 
+        System.out.println( emailAddress.getEmailAddress());
         if (idList != null) {
 
             Optional<ExpenseList> optionalExpenseList = expenseListService.findById(idList);
@@ -58,7 +62,7 @@ public class BalancingController {
                 List<Balancing> balancingList = balancingService.getBalacingPage(idList);
                 List<AmountDistribution> amountDistributionList = balancingService.getAmountDistributionList(balancingList);
 
-                balancingService.startBalancing(amountDistributionList, idList);
+                balancingService.startBalancing(amountDistributionList, idList, emailAddress);
 
                 // model.addAttribute("expenseList",expenseList);
                 // model.addAttribute("balancingList", balancingList);
