@@ -21,7 +21,7 @@
 			<h1 class="col-md-4" >Liste des dépenses</h1>
 			<div class="col-md-8">
 			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-				Ajouter une liste de dépense
+				Ajouter une liste de dépenses
 			</button>
 			</div>
 		</div>
@@ -31,8 +31,8 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Ajouter une liste de dépense</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<h5 class="modal-title" id="exampleModalLabel">Ajouter une liste de dépenses</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Annuler"></button>
 				</div>
 				<div class="modal-body">
 					<form method="post" th:action="@{/lists}" th:object="${expenseList}">
@@ -40,7 +40,7 @@
 							<label for="expenseList-name">Nom:</label>
 							<input type="text" id="expenseList-name" name="name" placeholder="Exemple:Colocation" required="required">
 						</div>
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
 						<button type="submit" class="btn btn-primary">Ajouter</button>
 					</form>
 				</div>

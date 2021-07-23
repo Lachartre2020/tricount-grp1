@@ -15,7 +15,7 @@
 <div class="row">""</div>
 <div class="container">
 
-	<h1 th:text="|Liste de dépense - ${expenseList.name} |">Liste de dépense</h1>
+	<h1 th:text="|Liste de dépenses - ${expenseList.name} |">Listes de dépenses</h1>
 	<div class="row">
 
         <h2 class="col-md-6" th:text="|Nombre de participants : ${expenseList.participants.size()} |">Nombre de participants</h2>
@@ -52,7 +52,7 @@
            					 </select>
   						</div>
 				      </div>
-				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">retour</button>
+				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
 				        <button type="submit" class="btn btn-primary">Ajouter</button>
 			      	</form>
 			      </div>
@@ -80,9 +80,9 @@
                 <thead>
                 <tr>
                     <th scope="col">Nom de la dépense</th>
-                    <th scope="col">Nb de bénéficiaire</th>
+                    <th scope="col">Nb de bénéficiaires</th>
                     <th scope="col">Montant</th>
-                    <th scope="col" class="text-center">Détail</th>
+                    <th scope="col" class="text-center">Détails</th>
                     <th scope="col" class="text-center">Supprimer</th>
                 </tr>
                 </thead>
@@ -93,8 +93,9 @@
                     <td th:text="${expense.participants.size()}">id</td>
                     <td th:text="${#numbers.formatCurrency(expense.amount)}">amount</td>
                     <td style="width: 10%;" class="text-center">
-                        <a class="table-link" th:href="|@{/expenses/}${expense.id}|">
-                            <span class="fa-stack">
+					<!--<a class="table-link" th:href="|@{/expenses/}${expense.id}|">-->
+						<a class="table-link btn" th:href="|@{/expenses/}${expense.id}|">
+                            <span class="fa-stack" style="color:blue">
                                 <i class="fa fa-square fa-stack-2x"></i>
                                 <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
                             </span>
@@ -110,7 +111,7 @@
                     </td> -->
               		<td style="width: 10%;">
 		                <!-- Button trigger modal -->
-		                <button type="button" class="btn btn-light" data-bs-toggle="modal" th:data-bs-target="'#deleteExpenseModal' + ${expense.id}">
+		                <button type="button" class="btn" data-bs-toggle="modal" th:data-bs-target="'#deleteExpenseModal' + ${expense.id}">
 		                    <span class="fa-stack" style="color:red">
 		                        <i class="fa fa-square fa-stack-2x"></i>
 		                        <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>

@@ -6,7 +6,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
     <meta charset="UTF-8">
-    <title>Tricount.com | Gestion d'une liste de dépense</title>
+    <title>Tricount.com | Gestion d'une liste de dépenses</title>
 </head>
 <body>
 <header th:replace="fragments/header.html :: top"></header>
@@ -15,7 +15,7 @@
 <div class="row">""</div>
 
 <div class="container">
-    <h2 th:text="${expenseList.id} ? 'Liste de dépense : '+${expenseList.name} : 'Créer une liste de dépense'">Liste de dépense</h2>
+    <h2 th:text="${expenseList.id} ? 'Liste de dépenses : '+${expenseList.name} : 'Créer une liste de dépenses'">Liste de dépenses</h2>
 </div>
 
 <div class="container">
@@ -45,7 +45,7 @@
             </button>
         </div>
         <div class="col-sm-3">
-            <a th:href="'/lists/' + ${expenseList.id} + '/expenses'" id="depenseListDetail" name="depenseListDetail" class="btn btn-primary">Détail de la liste de dépense</a>
+            <a th:href="'/lists/' + ${expenseList.id} + '/expenses'" id="depenseListDetail" name="depenseListDetail" class="btn btn-primary">Détail de la liste de dépenses</a>
         </div>
     </div>
 </div>
@@ -67,7 +67,7 @@
                             <label for="name" class="col-form-label">Prénom :</label>
                             <input type="text" class="form-control" id="firtnamePart" name="firstName" required="required">
                         </div>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                         <button type="submit" class="btn btn-primary">Ajouter</button>
                     </form>
                 </div>
@@ -95,7 +95,7 @@
             <td  th:text="${expenseListParticipants.firstName}">Name</td>
             <td style="width: 10%;">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-light" data-bs-toggle="modal" th:data-bs-target="'#deleteParticipantModal' + ${expenseListParticipants.id}">
+                <button type="button" class="btn" data-bs-toggle="modal" th:data-bs-target="'#deleteParticipantModal' + ${expenseListParticipants.id}">
                     <span class="fa-stack" style="color:red">
                         <i class="fa fa-square fa-stack-2x"></i>
                         <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
