@@ -8,6 +8,9 @@ import com.natixis.tricount.repository.ExpenseRepository;
 import com.natixis.tricount.repository.ParticpantRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -65,4 +68,8 @@ public class ExpensesOfListSrevice {
 		}
 	}
 	
+	public Page<Expense> findExpenseByIdPaginated (Long idList, Pageable pageable) {
+		//return expenseRepository.findById(idList, pageable);
+		return expenseRepository.findByExpenseListId(idList, pageable);
+		}
 }

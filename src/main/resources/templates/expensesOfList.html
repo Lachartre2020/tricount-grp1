@@ -39,7 +39,7 @@
 			      <div class="modal-body">
 			        <form  method="post" th:action="@{'/lists/' + ${expenseList.id} + '/expense'}" th:object="${expenses}">
 				       <!--  <div class="mb-3" th:object="${participants}">-->
-				       <div class="mb-3" th:object="${numbers}">
+				       <div class="mb-3">
 				        <label for="name" class="col-form-label" >Nom de la dépense:</label>
 				        <input type="text" id="name" name="name" class="form-control" required>
 				        <label for="amount" class="col-form-label" >Montant de la dépense: </label>
@@ -47,8 +47,7 @@
 			    		<!-- Liste de choix  -->
 			    		<div class="col-md-4">
    							 <label for="participant-list" class="col-form-label">Nom du payeur</label>
-   							 <select name="idPayeur" id="participant-list" required >
-   								 <option selected>Choisir...</option>   
+   							 <select name="idPayeur" id="participant-list" required >  
                					 <option th:each="participant : ${participants}" th:value="${participant.id}" th:text="${participant.name}"></option>
            					 </select>
   						</div>
@@ -145,6 +144,10 @@
     </div>
 </div>
 
+<!--Debut -- Gestion de la pagination -->
+<div th:replace="fragments/paginable2.html :: paginable2(hrefParam='/lists/'+${expenseList.id}+'/expenses')"></div>
+<!-- Fin -- Gestion de la pagination -->
+ 
 <div class="container">
 	<div class="row">
 	    <div class="col-md-2">
